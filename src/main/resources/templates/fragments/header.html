@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header class="container-fluid bg-white" th:fragment="header">
+    <div class="row justify-content-around align-items-center border-bottom py-4 mb-3">
+        <a class="col-4 text-center" th:href="@{/}" href="mainPage.html">
+            <img class="W-150px" th:src="@{/images/Logo.png}" alt="POMA Logo" />
+        </a>
+        <span class="col-4 text-center">
+            <a th:href="@{/customer}"><img class="rounded-circle Wh-40px mr-2" th:src="@{/images/call.png}" alt="문의하기" /></a>
+            <a th:if="${session.user == null}" th:href="@{/user/signin}"><img class="rounded-circle Wh-40px" th:src="@{/images/Login.png}" alt="Login" /></a>
+            <a th:if="${session.user != null}" th:href="@{/user/myPage}"><img class="rounded-circle Wh-40px" th:src="@{/images/Login.png}" alt="Login" /></a>
+        </span>
+    </div>
+</header>

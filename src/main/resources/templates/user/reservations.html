@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 배상현 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구장 예약 이력</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="container">
+    <h3 class="text-center">구장 예약 이력</h3>
+    <div class="row row-cols-md-3 row-cols-2  justify-content-center">
+        <div class="col" th:each="reservation : ${reservations}">
+            <div class="card-body">
+                <ul class="list-group mb-3">
+                    <li class="list-group-item"><strong th:text="|(${reservation.ground.location}) ${reservation.ground.name}|"></strong></li>
+                    <li class="list-group-item"><strong th:text="|${reservation.reservationYmd} ${reservation.reservationTime}시|"></strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

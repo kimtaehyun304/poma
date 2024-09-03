@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${sports}">P:A</title>
+    <!-- 부트스트랩 CDN 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/nav.css}" rel="stylesheet" >
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<header th:replace="~{fragments/headerLight :: header}"></header>
+<nav class="bg-secondary py-2" th:replace="~{fragments/nav :: nav(${sports})}"></nav>
+<section th:replace="~{fragments/searchingTab :: searchingTab}"></section>
+<section class="container my-5">
+    <!-- 용병 매치 -->
+    <div class="row" th:each="mercenaryMatch : ${mercenaryMatches}">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <span class="mercenaryMatchId d-none" th:text="${mercenaryMatch.id}"></span>
+                    <h4 class="card-title text-primary" th:text="|${mercenaryMatch.reservation.reservationTime}:00|"></h4>
+
+                    <div class="mb-4">
+                        <h5 class="card-subtitle mb-2 text-muted"
+                            th:text="|${mercenaryMatch.teams.size() == 1 ? mercenaryMatch.teams.get(0).name : mercenaryMatch.teams.get(0).name + 'vs' + mercenaryMatch.teams.get(1).name}|"></h5>
+                        <div class="mb-2" th:if="${mercenaryMatch.teams.size() >= 1}">
+                            <span class="teamId d-none" th:text="${mercenaryMatch.teams.get(0).id}"></span>
+                            <p class="card-text text-success" th:if="${mercenaryMatch.teams.get(0).mercenariesMaxSize.equals(0)}" th:text="|${mercenaryMatch.teams.get(0).name} 팀은 용병을 안 모집합니다|"></p>
+                            <p class="card-text" th:if="${!mercenaryMatch.teams.get(0).mercenariesMaxSize.equals(0)}" th:text="|${mercenaryMatch.teams.get(0).name} 용병 모집 인원: ${mercenaryMatch.teams.get(0).mercenariesMaxSize}|"></p>
+                            <p class="card-text" th:if="${!mercenaryMatch.teams.get(0).mercenariesMaxSize.equals(0)}" th:text="|${mercenaryMatch.teams.get(0).name} ${mercenaryMatch.teams.get(0).mercenariesMaxSize == mercenaryMatch.teams.get(0).mercenaryIdList.size() ? '용병 신청 마감' : '용병 신청 인원: ' + mercenaryMatch.teams.get(0).mercenaryIdList.size()}|"></p>
+                            <p class="card-text text-success" th:if="${mercenaryMatch.teams.get(0).isEqualToSessionTeam}" th:text="|본인 팀 (${mercenaryMatch.teams.get(0).name})에 용병 신청 못 합니다|"></p>
+                            <th:block th:if="${mercenaryMatch.teams.get(0).mercenariesMaxSize > mercenaryMatch.teams.get(0).mercenaryIdList.size() && !mercenaryMatch.teams.get(0).isEqualToSessionTeam}">
+                                <button class="btn btn-primary btn-block joinMercenaryBtn">용병 신청</button>
+                            </th:block>
+                            <th:block th:if="${mercenaryMatch.teams.get(0).containsSessionUserAsMercenary}">
+                                <button class="btn btn-primary btn-block cancelMercenaryBtn">용병 취소</button>
+                            </th:block>
+                        </div>
+
+                        <div class="mb-2" th:if="${mercenaryMatch.teams.size() == 2}">
+                            <span class="teamId d-none" th:text="${mercenaryMatch.teams.get(1).id}"></span>
+                            <p class="card-text text-success" th:if="${mercenaryMatch.teams.get(1).mercenariesMaxSize.equals(0)}" th:text="|${mercenaryMatch.teams.get(1).name} 팀은 용병을 안 모집합니다|"></p>
+                            <p class="card-text" th:if="${!mercenaryMatch.teams.get(1).mercenariesMaxSize.equals(0)}" th:text="|${mercenaryMatch.teams.get(1).name} 용병 모집 인원: ${mercenaryMatch.teams.get(1).mercenariesMaxSize}|"></p>
+                            <p class="card-text" th:if="${!mercenaryMatch.teams.get(1).mercenariesMaxSize.equals(0)}" th:text="|${mercenaryMatch.teams.get(1).name} 용병 신청 인원: ${mercenaryMatch.teams.get(1).mercenariesMaxSize == mercenaryMatch.teams.get(1).mercenaryIdList.size() ? '마감' : mercenaryMatch.teams.get(1).mercenaryIdList.size()}|"></p>
+                            <p class="card-text text-success" th:if="${mercenaryMatch.teams.get(1).isEqualToSessionTeam}" th:text="|본인 팀 (${mercenaryMatch.teams.get(1).name})에 용병 신청 못합니다|"></p>
+                            <th:block th:if="${mercenaryMatch.teams.get(1).mercenariesMaxSize > mercenaryMatch.teams.get(1).mercenaryIdList.size() && !mercenaryMatch.teams.get(1).isEqualToSessionTeam}">
+                                <button class="btn btn-primary btn-block joinMercenaryBtn">용병 신청</button>
+                            </th:block>
+                            <th:block th:if="${mercenaryMatch.teams.get(1).containsSessionUserAsMercenary}">
+                                <button class="btn btn-primary btn-block cancelMercenaryBtn">용병 취소</button>
+                            </th:block>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="card-subtitle mb-2 text-muted" th:text="${mercenaryMatch.reservation.ground.name}">구장
+                            이름1</h5>
+                        <p class="card-text" th:text="|모집 인원: ${mercenaryMatch.maxSize}|">모집 인원</p>
+                        <p class= "card-text UserSize"
+                           th:text="|신청 인원: ${mercenaryMatch.userIdList.size() == mercenaryMatch.maxSize ? '신청 마감' : mercenaryMatch.userIdList.size()}|">
+                            신청 인원</p>
+                        <p>
+                            <span class="badge badge-info mr-2" th:text="${mercenaryMatch.reservation.ground.location}">서울</span>
+                            <span class="badge badge-secondary" th:text="${mercenaryMatch.gender}">남성</span>
+                        </p>
+                        <button th:if="${mercenaryMatch.userIdList.size()<mercenaryMatch.maxSize && mercenaryMatch.containsSessionUserTeam == false}" class="btn btn-primary btn-block submitBtn">매치 신청</button>
+                        <a th:if="${mercenaryMatch.containsSessionUserTeam == true}" th:href="@{/mercenaryMatch/{id}/user/edit(id=${mercenaryMatch.id})}" class="btn btn-primary W-49 UpdateBtn">신청 수정</a>
+                        <button th:if="${mercenaryMatch.containsSessionUserTeam == true}" class="btn btn-primary W-49 CancelBtn">일괄 취소</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script th:src="@{/js/match/mercenaryMatch.js}"></script>
+<script th:src="@{/js/match/match.js}"></script>
+</body>
+</html>

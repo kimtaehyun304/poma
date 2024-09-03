@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 배상현 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P:A 내정보</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/nav.css}" rel="stylesheet" >
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <!--<link rel="stylesheet" href="../css/sports.css" th:href="@{/css/sports.css}"> -->
+</head>
+<body>
+<header class="bg-dark text-white py-4" th:replace="~{fragments/header :: header}"></header>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="row justify-content-around mb-3">
+                <a class="col-4 btn btn-primary" th:href="@{/user/matches}">매치 참가 이력</a>
+                <a class="col-4 btn btn-primary" th:href="@{/user/reservations}">구장 예약 이력</a>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <strong th:text="|내 정보 --- ${user.name}님의 정보|">내 정보 --- ex)Sanghyun 님의 정보 </strong>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">ID: <strong th:text="${user.loginId}"></strong></li>
+                        <li class="list-group-item">이름: <strong id="name" th:text="${user.name}"></strong></li>
+                        <li class="list-group-item">팀: <strong th:text="${user.team?.name == null ? '팀에 가입하지 않았어요' : user.team?.name}"></strong>
+                            <a class="btn btn-primary" th:href="@{/teams}">팀 선택</a>
+                        </li>
+                        <li class="list-group-item">성별: <strong th:text="${user.gender}"></strong></li>
+                        <li class="list-group-item">이메일: <strong th:text="${user.email}"></strong></li>
+                        <li class="list-group-item">전화번호: <strong th:text="${user.phone}"></strong></li>
+                        <li class="list-group-item">잔액: <strong id="money" th:text="${#numbers.formatInteger(user.money, 0, 'COMMA')}"></strong>원
+                            <button id="pay-btn" class="border-0 bg-transparent">
+                                <img th:src="@{/images/kakao_payment_icon.png}">
+                            </button>
+                        </li>
+                        <li class="list-group-item">
+                            <form th:action="@{/user/logout}" method="post">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                <input type="submit" value="로그아웃" class="btn btn-danger">
+                            </form>
+                            <a class="btn btn-primary" th:href="@{/admin}" th:if="${user.authority.toString().contains('ADMIN')}">관리자 페이지</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script th:src="@{/js/payment.js}"></script>
+</body>
+</html>

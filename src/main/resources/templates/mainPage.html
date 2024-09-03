@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POMA</title>
+    <!-- 부트스트랩 CDN 추가 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="container px-4 px-lg-5 mt-0">
+    <section id="home" class="px-md-5">
+        <div class="row row-cols-2 row-cols-md-4 row-cols-xl-4 justify-content-center px-5">
+                <a href="/socialMatch/futsal" class="px-2">
+                    <div class="col mb-5">
+                        <div class="card Card h-100">
+                            <img class="card-img-top" src="/sports-icon/futsal.svg" alt="풋살" />
+                            <div class="card-body p-3">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">풋살</h5>
+                                    Futsal
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="/socialMatch/tennis" class="px-2">
+                    <div class="col mb-5">
+                        <div class="card Card h-100">
+                            <img class="card-img-top" src="/sports-icon/tennis.svg" alt="테니스" />
+                            <div class="card-body p-3">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">테니스</h5>
+                                    Tennis
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="/socialMatch/basketball" class="px-2">
+                    <div class="col mb-5">
+                        <div class="card Card h-100">
+                            <img class="card-img-top" src="/sports-icon/basketball.svg" alt="농구" />
+                            <div class="card-body p-3">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">농구</h5>
+                                    Basketball
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="/socialMatch/badminton" class="px-2">
+                    <div class="col mb-5">
+                        <div class="card Card h-100">
+                            <img class="card-img-top" src="/sports-icon/badminton.svg" alt="배드민턴" />
+                            <div class="card-body p-3">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">배드민턴</h5>
+                                    Badminton
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="/socialMatch/billiard" class="px-2">
+                    <div class="col mb-5">
+                        <div class="card Card h-100">
+                            <img class="card-img-top" src="/sports-icon/billiard.svg" alt="당구" />
+                            <div class="card-body p-3">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">당구</h5>
+                                    Billiard
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="/socialMatch/bowling" class="px-2">
+                    <div class="col mb-5">
+                        <div class="card Card h-100">
+                            <img class="card-img-top" src="/sports-icon/bowling.svg" alt="볼링" />
+                            <div class="card-body p-3">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">볼링</h5>
+                                    Bowling
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="/socialMatch/soccer" class="px-2">
+                    <div class="col mb-5">
+                        <div class="card Card h-100">
+                            <img class="card-img-top" src="/sports-icon/soccer.svg" alt="축구" />
+                            <div class="card-body p-3">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">축구</h5>
+                                    Football
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="/socialMatch/tableTennis" class="px-2">
+                    <div class="col mb-5">
+                        <div class="card Card h-100">
+                            <img class="card-img-top" src="/sports-icon/tableTennis.svg" alt="탁구" />
+                            <div class="card-body p-3">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">탁구</h5>
+                                    Table-Tennis
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+    </section>
+    <section id="about" class="container  py-4">
+            <h3 class="text-center Text-blue">POMA</h3>
+            <p>구기 운동인 풋살, 테니스, 농구, 배드민턴, 당구, 볼링, 축구, 탁구 이 8가지 종목 중에
+                하나를 선택해 동호회에 가입하고 구장 예약을 해주는 시스템을 구성하는 웹사이트입니다.</p>
+    </section>
+    <section id="clubs" class="container py-4">
+            <h3 class="text-center Text-blue">동호회 소개</h3>
+            <p>POMA는 다양한 스포츠 동호회를 소개합니다. 아래는 몇 가지 동호회의 예시입니다:</p>
+            <div class="club">
+                <h4>풋살 클럽</h4>
+                <p>풋살을 즐기는 사람들의 모임으로, 주말마다 경기를 진행하고 있습니다.</p>
+            </div>
+            <div class="club">
+                <h4>테니스 클럽</h4>
+                <p>테니스를 즐기는 사람들을 위한 클럽으로, 주변 코트에서 연습 및 경기를 진행합니다.</p>
+            </div>
+            <div class="club">
+                <h4>농구 클럽</h4>
+                <p>농구를 즐기는 사람들을 위한 클럽으로, 주로 실내 코트에서 연습 및 경기를 진행합니다.</p>
+            </div>
+            <div class="club">
+                <h4>배드민턴 클럽</h4>
+                <p>배드민턴을 즐기는 사람들을 위한 클럽으로, 주로 체육관에서 연습 및 경기를 진행합니다.</p>
+            </div>
+            <div class="club">
+                <h4>당구 클럽</h4>
+                <p>당구를 즐기는 사람들을 위한 클럽으로, 주로 당구장에서 연습 및 게임을 즐깁니다.</p>
+            </div>
+            <div class="club">
+                <h4>볼링 클럽</h4>
+                <p>볼링을 즐기는 사람들을 위한 클럽으로, 볼링장에서 주로 활동합니다.</p>
+            </div>
+            <div class="club">
+                <h4>축구 클럽</h4>
+                <p>축구를 즐기는 사람들을 위한 클럽으로, 주로 축구장에서 연습 및 경기를 진행합니다.</p>
+            </div>
+            <div class="club">
+                <h4>탁구 클럽</h4>
+                <p>탁구를 즐기는 사람들을 위한 클럽으로, 주로 탁구장에서 연습 및 게임을 즐깁니다.</p>
+            </div>
+    </section>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

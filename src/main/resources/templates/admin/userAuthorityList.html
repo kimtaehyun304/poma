@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExSports</title>
+    <!--<link rel="stylesheet" th:href="@{/css/adminList.css}">-->
+    <!-- 부트스트랩 CDN 추가 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<section class="container text-center">
+    <h1>SUPER_ADMIN: 계정 권한 변경 가능</h1>
+    <h1>ADMIN: 계정 권한 조회 가능</h1>
+    <div class="row justify-content-center">
+        <table class="table w-75">
+            <thead class="table-primary">
+            <tr>
+                <th scope="col" class="d-none d-sm-table-cell">PK ID</th>
+                <th scope="col" class="d-none d-sm-table-cell">이름</th>
+                <th scope="col">로그인 ID</th>
+                <th scope="col" class="d-none d-sm-table-cell">가입 날짜</th>
+                <th scope="col">계정 상태</th>
+                <th scope="col">ADMIN 승급</th>
+                <th scope="col">USER 강등</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}" class="d-none d-sm-table-cell"></td>
+                <td th:text="${user.name}" class="d-none d-sm-table-cell"></td>
+                <td th:text="${user.loginId}"></td>
+                <td th:text="${user.regdate}" class="d-none d-sm-table-cell"></td>
+                <td th:text="${user.authority}"></td>
+                <td>
+                    <button class="btn btn-primary admin-btn">ADMIN</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger user-btn">USER</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/admin/userAuthorityList.js}"></script>
+</body>
+</html>

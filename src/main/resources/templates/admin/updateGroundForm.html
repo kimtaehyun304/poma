@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <!-- 부트스트랩 CDN 추가 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<header th:replace="~{fragments/header :: header}"></header>
+<body>
+<section class="container Mw-700px">
+    <form action="/ground" method="POST" id="my-form">
+        <div class="form-group">
+            <label for="location">위치</label>
+            <select id="location" name="location" class="form-control Height-50">
+                <option value="서울" th:selected="${ground.location.equals('서울')}">서울</option>
+                <option value="부산" th:selected="${ground.location.equals('부산')}">부산</option>
+                <option value="인천" th:selected="${ground.location.equals('인천')}">인천</option>
+                <option value="대구" th:selected="${ground.location.equals('대구')}">대구</option>
+                <option value="경기" th:selected="${ground.location.equals('경기')}">경기</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">구장 이름</label>
+            <input type="text" name="name" class="form-control Height-50" id="name" th:value="${ground.name}">
+        </div>
+        <div class="form-group">
+            <label for="price">요금</label>
+            <input type="text" name="price" class="form-control Height-50" id="price" th:value="${ground.price}"
+                   placeholder="무료면 0을 입력하세요">
+        </div>
+        <button type="submit" class="btn Bg-e6 w-100 p-3">수정</button>
+    </form>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/admin/updateGround.js}" src="../../static/js/user/signup.js"></script>
+</body>
+</html>

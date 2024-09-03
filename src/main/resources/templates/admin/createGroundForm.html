@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <!-- 부트스트랩 CDN 추가 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<header th:replace="~{fragments/header :: header}"></header>
+<body>
+<section class="container Mw-700px">
+    <form method="POST">
+        <div class="form-group">
+            <label for="location" class="d-block">위치</label>
+            <select id="location" name="location" class="form-control Height-50">
+                <option th:value="서울" value="서울">서울</option>
+                <option th:value="부산" value="부산">부산</option>
+                <option th:value="인천" value="인천">인천</option>
+                <option th:value="대구" value="대구">대구</option>
+                <option th:value="경기" value="경기">경기</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">구장 이름</label>
+            <input type="text" id="name" name="name" class="form-control Height-50">
+        </div>
+        <div class="form-group">
+            <label for="price">요금</label>
+            <input type="text" id="price" name="price" class="form-control Height-50" placeholder="무료면 비워두거나 0을 입력하세요">
+        </div>
+        <button type="submit" class="btn Bg-e6 w-100 p-3">추가</button>
+    </form>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/admin/createGround.js}" src="../../static/js/user/signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 배상현 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>매치 참가 이력</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="container">
+    <div class="card mb-3">
+        <div class="card-header">소셜 매치 참가 이력</div>
+        <div class="card-body">
+            <div class="row row-cols-md-5 row-cols-2 justify-content-center">
+                <div class="col" th:each="socialUser : ${joinedMatchesDto.socialUsers}">
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item">
+                            <strong th:text="|(${socialUser.socialMatch.reservation.ground.location}) ${socialUser.socialMatch.reservation.ground.name}|"></strong>
+                        </li>
+                        <li class="list-group-item">
+                            <strong th:text="|${socialUser.socialMatch.reservation.reservationYmd} ${socialUser.socialMatch.reservation.reservationTime}시|"></strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">팀 매치 참가 이력</div>
+        <div class="card-body">
+            <div class="row row-cols-md-5 row-cols-2 justify-content-center">
+                <ul class="list-group mb-3" th:each="teamUser : ${joinedMatchesDto.teamUsers}">
+                    <li class="list-group-item">
+                        <strong th:text="|(${teamUser.teamMatch.reservation.ground.location}) ${teamUser.teamMatch.reservation.ground.name}|"></strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong th:text="|${teamUser.teamMatch.reservation.reservationYmd} - ${teamUser.teamMatch.reservation.reservationTime}시|"></strong>
+                    </li>
+                    <li class="list-group-item">
+                        팀: <strong th:text="${teamUser.team.name}"></strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">용병 매치 참가 이력</div>
+        <div class="card-body">
+            <div class="row row-cols-md-5 row-cols-2 justify-content-center">
+                <ul class="list-group mb-3"
+                    th:each="mercenaryMatchUser : ${joinedMatchesDto.mercenaryMatchUsers}">
+                    <li class="list-group-item">
+                        <strong th:text="|(${mercenaryMatchUser.mercenaryMatch.reservation.ground.location}) ${mercenaryMatchUser.mercenaryMatch.reservation.ground.name}|"></strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong th:text="|${mercenaryMatchUser.mercenaryMatch.reservation.reservationYmd} - ${mercenaryMatchUser.mercenaryMatch.reservation.reservationTime}시|"></strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong th:text="${mercenaryMatchUser.team.name}"></strong>
+                        <strong th:if="${mercenaryMatchUser.status.toString().equals('TEAM')}">(팀)</strong>
+                        <strong th:if="${mercenaryMatchUser.status.toString().equals('MERCENARY')}">(용병)</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

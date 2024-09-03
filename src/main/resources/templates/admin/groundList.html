@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExSports</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<section class="container">
+    <div class="text-center">
+        <a class="btn btn-warning w-50 m-3" th:href="@{/ground}">구장 추가</a>
+    </div>
+    <table class="table text-center">
+        <thead class="table-primary">
+        <tr>
+            <th scope="col" class="d-none d-sm-table-cell">PK ID</th>
+            <th scope="col">위치</th>
+            <th scope="col">이름</th>
+            <th scope="col">대여료</th>
+            <th scope="col">수정</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ground : ${grounds}">
+            <td th:text="${ground.id}" class="d-none d-sm-table-cell"></td>
+            <td th:text="${ground.location}"></td>
+            <td th:text="${ground.name}"></td>
+            <td th:text="${ground.price}"></td>
+            <td>
+                <a th:href="@{/ground/{id}(id=${ground.id})}" class="btn btn-primary edit-btn">수정</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/admin/userAuthorityList.js}"></script>
+</body>
+</html>

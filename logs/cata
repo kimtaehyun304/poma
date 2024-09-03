@@ -1,0 +1,36 @@
+2024-09-03T14:26:23.002+09:00  INFO 9324 --- [restartedMain] g.sportsmanage.SportsManageApplication   : Starting SportsManageApplication using Java 17.0.12 with PID 9324 (E:\3학년 1학기\호일 수업\배포 버전\sports-manage-9.03\build\classes\java\main started by user in E:\3학년 1학기\호일 수업\배포 버전\sports-manage-9.03)
+2024-09-03T14:26:23.002+09:00  INFO 9324 --- [restartedMain] g.sportsmanage.SportsManageApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-09-03T14:26:23.146+09:00  INFO 9324 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-03T14:26:23.151+09:00  INFO 9324 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 JPA repository interfaces.
+2024-09-03T14:26:23.244+09:00  INFO 9324 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 50953 (https)
+2024-09-03T14:26:23.244+09:00  INFO 9324 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-09-03T14:26:23.245+09:00  INFO 9324 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-09-03T14:26:23.261+09:00  INFO 9324 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-09-03T14:26:23.262+09:00  INFO 9324 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 259 ms
+2024-09-03T14:26:23.303+09:00  INFO 9324 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-03T14:26:23.309+09:00  INFO 9324 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-09-03T14:26:23.309+09:00  INFO 9324 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-03T14:26:23.309+09:00  INFO 9324 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2024-09-03T14:26:23.362+09:00  INFO 9324 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6743cfa0
+2024-09-03T14:26:23.363+09:00  INFO 9324 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2024-09-03T14:26:23.367+09:00  INFO 9324 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-09-03T14:26:23.395+09:00  INFO 9324 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2024-09-03T14:26:23.494+09:00  INFO 9324 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-09-03T14:26:23.495+09:00  INFO 9324 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-03T14:26:23.634+09:00  WARN 9324 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-03T14:26:23.639+09:00  WARN 9324 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 05aa9dc0-0058-4e50-b8f6-92cfcd52878e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-09-03T14:26:23.678+09:00  INFO 9324 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@57b4fb87, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1f286d4e, org.springframework.security.web.context.SecurityContextHolderFilter@565ee55f, org.springframework.security.web.header.HeaderWriterFilter@4a76cc8f, org.springframework.web.filter.CorsFilter@5e156a75, org.springframework.security.web.csrf.CsrfFilter@21993afc, org.springframework.security.web.authentication.logout.LogoutFilter@2aec3083, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3ef87bb2, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7757f077, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1536211c, org.springframework.security.web.access.ExceptionTranslationFilter@62357a60]
+2024-09-03T14:26:23.734+09:00  INFO 9324 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-09-03T14:26:23.797+09:00  INFO 9324 --- [restartedMain] o.a.t.util.net.NioEndpoint.certificate   : Connector [https-jsse-nio-50953], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [C:\Users\user\.keystore] using alias [tomcat] with trust store [null]
+2024-09-03T14:26:23.799+09:00  INFO 9324 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 50953 (https) with context path ''
+2024-09-03T14:26:23.802+09:00  INFO 9324 --- [restartedMain] g.sportsmanage.SportsManageApplication   : Started SportsManageApplication in 0.837 seconds (process running for 2400.745)
+2024-09-03T14:26:23.803+09:00  INFO 9324 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-09-03T14:26:58.006+09:00  INFO 9324 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 96 class path changes (0 additions, 26 deletions, 70 modifications)
+2024-09-03T14:26:58.011+09:00  INFO 9324 --- [Thread-15] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-03T14:26:58.012+09:00  INFO 9324 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2024-09-03T14:26:58.013+09:00  INFO 9324 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.

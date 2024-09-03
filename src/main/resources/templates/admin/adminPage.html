@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExSports</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<section class="container text-center">
+        <h1 th:text="|[${session.user.authority}] ${session.user.name}|"></h1>
+        <div>
+            <a th:href="@{/admins}" class="btn btn-primary">관리자 승격 및 강등</a>
+            <a th:href="@{/grounds}" class="btn btn-primary">구장 관리</a>
+        </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

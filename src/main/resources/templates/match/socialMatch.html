@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<title th:text="${sportsInfo.initialName}">P:A</title>-->
+    <title th:text="${sports}">P:A</title>
+    <!-- 부트스트랩 CDN 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="../../static/css/sports.css" th:href="@{/css/sports.css}"> -->
+    <!-- flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/nav.css}" rel="stylesheet" >
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<header th:replace="~{fragments/headerLight :: header}"></header>
+<nav class="bg-secondary py-2" th:replace="~{fragments/nav :: nav(${sports})}"></nav>
+<section th:replace="~{fragments/searchingTab :: searchingTab}"></section>
+<section class="container my-5">
+    <!-- 소셜 매치 -->
+    <div class="row" th:each="socialMatch : ${socialMatches}">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <span th:text="${socialMatch.id}" class="socialMatchId d-none"></span>
+                    <h4 class="card-title text-primary" th:text="|${socialMatch.reservation.reservationTime}:00|">20:00</h4>
+                    <h5 class="card-subtitle mb-2 text-muted" th:text="${socialMatch.reservation.ground.name}">구장 이름1</h5>
+                    <p class="card-text " th:text="|모집 인원: ${socialMatch.maxSize}|">모집 인원</p>
+                    <p class="card-text UserSize" th:text="${socialMatch.userIdList.size() == socialMatch.maxSize ? '신청 마감' : '신청 인원: '+socialMatch.userIdList.size()}">신청 인원</p>
+                    <div class="mb-3">
+                        <span class="badge badge-info mr-2" th:text="${socialMatch.reservation.ground.location}">서울</span>
+                        <span class="badge badge-secondary" th:text="${socialMatch.gender}">남성</span>
+                    </div>
+                    <button th:if="${socialMatch.userIdList.size()<socialMatch.maxSize && socialMatch.containsSessionUser == false}" class="btn btn-primary btn-block submitBtn">신청 하기</button>
+                    <button th:if="${socialMatch.containsSessionUser == true}" class="btn btn-primary btn-block CancelBtn">신청 취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script th:src="@{/js/match/socialMatch.js}"></script>
+<script th:src="@{/js/match/match.js}"></script>
+</body>
+</html>

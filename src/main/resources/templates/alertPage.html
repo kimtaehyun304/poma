@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>메시지 페이지</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<!-- User form-->
+<section class="container">
+    <div class="text-center">
+        <h1 th:text="${message}">메시지</h1>
+    </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

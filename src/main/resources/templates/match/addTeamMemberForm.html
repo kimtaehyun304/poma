@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Match 인원 선발</title>
+    <!-- 부트스트랩 CDN 추가 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<section class="container Mw-700px">
+    <h1 th:text="|매치 인원 선발 (${teamMatch.maxSize/2}명)|"></h1>
+    <h2 th:if="${users.size() == 0}">모집 성별과 맞는 멤버가 없어요!</h2>
+    <span th:text="${teamMatch.id}" id="teamMatchId" class="d-none"></span>
+    <span th:text="${teamMatch.sports}" id="sports" class="d-none"></span>
+    <h2 class="my-4">멤버 목록</h2>
+    <div th:if="${users.size() != 0}">
+        <label class="d-block" th:each="user : ${users}">
+            <input type='checkbox' class="Wh-30px" name='userIdList' th:value="${user.id}"/>
+            <span class="Font-size-30px" th:text="${user.name}"></span>
+        </label>
+        <button class="btn btn-primary w-100" id="applyButton">신청하기</button>
+    </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/match/createTeamMatchForm.js}"></script>
+</body>
+</html>

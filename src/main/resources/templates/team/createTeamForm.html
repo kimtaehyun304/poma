@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>팀 생성</title>
+    <!-- 부트스트랩 CDN 추가 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<header th:replace="~{fragments/header :: header}"></header>
+<body>
+<section class="container text-center">
+        <label for="name" class="d-block">팀 생성</label>
+        <input type="text" name="name" class="form-control w-50 d-inline" id="name" aria-describedby="emailHelp"
+               placeholder="팀 이름을 입력하세요">
+        <button id="joinBtn" class="btn btn-primary">생성 하기</button>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/createTeamForm.js}"></script>
+</body>
+</html>

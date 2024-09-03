@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Match 선발 인원 수정</title>
+    <!-- 부트스트랩 CDN 추가 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<section class="container Mw-700px">
+    <h1 th:text="|매치 인원 선발 (${mercenaryMatch.maxSize/2}명)|"></h1>
+    <h4>남은 자리는 용병으로 채웁니다</h4>
+    <h4>상대 팀에 용병으로 참가한 멤버는 표시되지 않습니다</h4>
+    <span th:text="${mercenaryMatch.id}" id="matchId" class="d-none"></span>
+    <span th:text="${mercenaryMatch.sports}" id="sports" class="d-none"></span>
+    <h2 class="my-4">멤버 목록</h2>
+    <div th:if="${members != null}">
+        <label class="pr-2" th:each="member : ${members}">
+            <th:block th:with="isContain=${mercenaryMatch.userIdList.contains(member.id)}">
+                <input type='checkbox' class="Wh-30px" name='memberIdList' th:value="${member.id}" th:checked="${isContain}"/>
+            </th:block>
+            <span class="Font-size-30px" th:text="${member.name}"></span>
+        </label>
+    </div>
+    <h2 class="my-4">용병 목록</h2>
+    <div th:if="${mercenaries != null}">
+        <label class="pr-2" th:each="mercenary : ${mercenaries}">
+            <input type='checkbox' class="Wh-30px" name='mercenaryIdList' th:value="${mercenary.id}" checked/>
+            <span class="Font-size-30px" th:text="${mercenary.name}"></span>
+        </label>
+    </div>
+    <button class="btn btn-primary w-100" id="applyButton">수정하기</button>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/match/editMercenaryMatchForm.js}"></script>
+</body>
+</html>

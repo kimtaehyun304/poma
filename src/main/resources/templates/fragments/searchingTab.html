@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<section class="container mt-3" th:fragment="searchingTab">
+    <div class="row justify-content-center">
+        <div class="col">
+            <form class="form-row d-inline-flex">
+                <div class="col">
+                    <input type="date" name="date" class="form-control w-auto bg-white" id="datepicker" placeholder="날짜 선택"
+                           th:value="${date}">
+                </div>
+                <div class="col">
+                    <select class="form-control w-auto Border-radius-20" name="location" id="region">
+                        <option value="all" th:selected="${location.equals('all')}">전체</option>
+                        <option value="서울" th:selected="${location.equals('서울')}">서울</option>
+                        <option value="부산" th:selected="${location.equals('부산')}">부산</option>
+                        <option value="인천" th:selected="${location.equals('인천')}">인천</option>
+                        <option value="대구" th:selected="${location.equals('대구')}">대구</option>
+                        <option value="경기" th:selected="${location.equals('경기')}">경기</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control w-auto Border-radius-20" name="gender" id="gender">
+                        <option value="all" th:selected="${gender == null}">전체</option>
+                        <option value="male" th:selected="${gender?.toString()?.equals('male')}">남성</option>
+                        <option value="female" th:selected="${gender?.toString()?.equals('female')}">여성</option>
+                        <option value="both" th:selected="${gender?.toString()?.equals('both')}">혼성</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary ml-1" type="submit">검색</button>
+                </div>
+            </form>
+            <button class="btn btn-success" id="removeBtn">마감 가리기</button>
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문의 게시판 - ExSports</title>
+    <!-- 부트스트랩 CDN 추가 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" th:href="@{/css/customers.css}">-->
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<section class="container">
+    <h2>문의 게시판</h2>
+    <table class="table">
+        <thead class="table-primary">
+            <tr>
+                <th class="d-none d-sm-table-cell">게시글 번호</th>
+                <th class="d-none d-sm-table-cell">작성자명</th>
+                <th>제목</th>
+                <th class="d-none d-sm-table-cell">작성일</th>
+                <th class="MinW-80px">비밀 글</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr class="myTr" th:each="post : ${posts}">
+            <td class="d-none d-sm-table-cell" th:text="${post.id}"></td>
+            <td class="d-none d-sm-table-cell text-primary" th:if="${#strings.contains(#strings.toString(post.user.authority), 'ADMIN') == true}">관리자</td>
+            <td class="d-none d-sm-table-cell" th:if="${#strings.contains(#strings.toString(post.user.authority), 'ADMIN') == false}"  th:text="${post.user.name}"></td>
+            <td class="" th:text="${post.title}"></td>
+            <td class="d-none d-sm-table-cell" th:text="${#temporals.format(post.regdate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${post.secret == true} ? '비공개' : '공개'"></td>
+        </tr>
+        </tbody>
+    </table>
+    <nav th:if="${pagination.lastPage != 0}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:if="${pagination.pageGroup>1}">
+                <a class="page-link" th:href="@{/customers(page=${pagination.firstPage - 1})}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <th:block th:each="i : ${#numbers.sequence(pagination.firstPage, pagination.lastPage)}">
+                <li class="page-item" th:classappend="${#strings.equals(param.page, i) || (param.page == null && i==1)} ? 'active'" ><a class="page-link" th:href="@{/customers(page=${i})}" th:text="${i}"></a></li>
+            </th:block>
+            <li class="page-item" th:if="${pagination.lastPage<pagination.pageCount}">
+                <a class="page-link" th:href="@{/customers(page=${pagination.lastPage + 1})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <nav class="navbar navbar-light bg-light justify-content-center">
+        <form class="form-inline" >
+            <select class="form-control mr-sm-2" name="category">
+                <option value="name" th:selected="${#strings.equals(param.category, 'name')}">작성자</option>
+                <option value="content" th:selected="${#strings.equals(param.category, 'content')}">내용</option>
+            </select>
+            <input type="hidden" name="sports" th:value="${sports}">
+            <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="Search" aria-label="Search" th:value="${param.keyword}">
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">검색</button>
+        </form>
+    </nav>
+</section>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/customerPostList.js}"></script>
+</body>
+</html>

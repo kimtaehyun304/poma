@@ -1,0 +1,183 @@
+* {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.Font-size-20px {
+    font-size: 20px;
+}
+
+
+.Font-size-30px {
+    font-size: 30px;
+}
+
+.Wh-20px {
+    width: 20px;
+    height: 20px;
+}
+
+.Wh-30px {
+    width: 30px;
+    height: 30px;
+}
+
+.Wh-40px {
+    width: 40px;
+    height: 40px;
+}
+
+.Mw-110px {
+    max-width: 110px; !important;
+}
+
+.Mw-700px {
+    max-width: 700px; !important;
+}
+
+.W-150px {
+    width: 150px;
+}
+
+.MinW-80px{
+    min-width: 80px; !important;
+}
+
+.Card {
+    border: 1px solid #b8daff;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.Text-blue {
+    color: #0056b3;
+}
+
+.Card:hover {
+    transform: translateY(-5px);
+}
+
+.Border-radius-20{
+    border-radius: 20px;
+}
+
+
+a, a:hover {
+    text-decoration: none;
+    color: #333;
+}
+
+.col {
+    /*
+    display: inline-block;
+    width: auto;
+    */
+    padding-left: 0;
+    padding-right: 0;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #fcfcfc;
+}
+
+footer{
+    margin-top: auto;
+}
+
+.Bg-e6{
+    background-color: #eeeeee;
+    color: rgb(0, 0, 0);
+}
+
+.Height-50{
+    height: 50px;
+}
+
+.Height-60{
+    height: 60px;
+}
+
+.bordered-btn {
+    border: 2px solid #9f9f9f;
+    border-radius: 5px;
+}
+
+.Bg-silver {
+    background-color: rgba(0, 0, 0, .03);
+}
+
+.Bg-f0f0f0{
+    background-color: #f0f0f0;
+}
+
+.Wavy-blue {
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: blue;
+}
+
+.Wavy-red {
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: red;
+}
+
+.W-49{
+    width: 49%;
+}
+
+.myTr:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    /*color: blue;*/
+}
+
+.Underline-blue {
+    text-decoration-line: underline;
+    text-decoration-color: blue;
+}
+
+.Pe-auto{
+    cursor: pointer;
+}
+
+.Border-none{
+    border: none;
+}
+
+.Bg-none{
+    background: none;
+}
+
+/*
+.Color-gray{
+    color: rgb(140, 140, 140);
+}
+
+ */
+
+.Hover-white:hover{
+    color: white;
+}
+
+.Hover-gray:hover{
+    color: gray;
+}
+
+.Height-300{
+    height: 300px;
+}
+
+.Comments{
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+.Z-index-0{
+    z-index: 0;
+}
