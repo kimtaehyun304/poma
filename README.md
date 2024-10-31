@@ -85,6 +85,35 @@ ResponseEntity와 ModelAndView를 동적으로 반환하려면 메서드 반환�
 
 ## 디자인 미리보기
 
+### 회원가입
+<p align="center">
+<img src="https://github.com/user-attachments/assets/1a564d2c-1bab-4639-a212-b46c70318ff6" width="50%" height="50%"/>
+</p>
+
+### 로그인
+<p align="center">
+<img src="https://github.com/user-attachments/assets/15c42d39-7d74-4850-9e07-80bb4aa8ba6b" width="50%" height="50%"/>
+</p>
+
+### 분실 계정 찾기
+<p align="center">
+<img src="https://github.com/user-attachments/assets/be053b30-18b2-4011-b7a5-80eddbe9bd03" width="50%" height="50%"/>
+</p>
+
+### 마이페이지
+<p align="center">
+<img src="https://github.com/user-attachments/assets/d5489aed-a78e-4e59-8055-c99bb383c533" width="50%" height="50%"/>
+</p>
+
+### 관리자 페이지
+<p align="center">
+<img src="https://github.com/user-attachments/assets/904d4c24-7c77-45e0-a30b-d5e78ad2f120" width="50%" height="50%"/>
+</p>
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/dd6c9852-b007-46a5-b6a8-a1d6f8e71e3c" width="50%" height="50%"/>
+</p>
+
 ### 메인 페이지
 <p align="center">
 <img src="https://github.com/user-attachments/assets/0888f4c6-6062-4016-9dda-0f2f571e83b2" width="50%" height="50%"/>
@@ -110,14 +139,7 @@ ResponseEntity와 ModelAndView를 동적으로 반환하려면 메서드 반환�
 <img src="https://github.com/user-attachments/assets/31d13549-d7c0-451d-a0e5-5c202cad85de" width="50%" height="50%"/>
 </p>
 
-### 관리자 페이지
-<p align="center">
-<img src="https://github.com/user-attachments/assets/904d4c24-7c77-45e0-a30b-d5e78ad2f120" width="50%" height="50%"/>
-</p>
 
-<p align="center">
-<img src="https://github.com/user-attachments/assets/dd6c9852-b007-46a5-b6a8-a1d6f8e71e3c" width="50%" height="50%"/>
-</p>
 
 
 
