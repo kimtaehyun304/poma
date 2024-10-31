@@ -80,7 +80,7 @@ ResponseEntity와 ModelAndView를 동적으로 반환하려면 메서드 반환�
 
 
 ## 개발 후기
-실무처럼 해보고자 백엔드 방어 코드에 공을 들였습니다.  
+실무처럼 해보고자 백엔드 방어 코드를 신경 썼습니다.  
 스프링 시큐리티 CSP를 적용하니 카카오 지도 API, 포트원 결제 API가 원활하지 않게 동작해서 적용을 못했습니다.  
 
 ## 디자인 미리보기
@@ -110,6 +110,14 @@ ResponseEntity와 ModelAndView를 동적으로 반환하려면 메서드 반환�
 <img src="https://github.com/user-attachments/assets/31d13549-d7c0-451d-a0e5-5c202cad85de" width="50%" height="50%"/>
 </p>
 
+### 관리자 페이지
+<p align="center">
+<img src="https://github.com/user-attachments/assets/904d4c24-7c77-45e0-a30b-d5e78ad2f120" width="50%" height="50%"/>
+</p>
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/dd6c9852-b007-46a5-b6a8-a1d6f8e71e3c" width="50%" height="50%"/>
+</p>
 
 
 
