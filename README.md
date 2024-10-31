@@ -7,7 +7,8 @@ POMA는 다양한 종목의 스포츠를 편리하게 즐길 수 있는 플랫�
 구장 예약, 매칭 기능을 통해 사용자들이 편리하게 스포츠를 즐길 수 있습니다.
 
 ## 프로젝트 스택
-SpringBoot, SpringSecurity, Jpa, Gradle,ThymeLeaf, BootStrap, JavaScript, Aws(rds, route53), lets`encrypt  
+SpringBoot, SpringSecurity, Jpa, Gradle, Aws(rds, route53), lets`encrypt  
+ThymeLeaf, BootStrap, JavaScript
 
 ## 설계
 [스프링 시큐리티]  
