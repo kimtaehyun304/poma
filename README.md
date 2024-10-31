@@ -10,6 +10,9 @@ POMA는 다양한 종목의 스포츠를 편리하게 즐길 수 있는 플랫�
 SpringBoot, SpringSecurity, Jpa, Gradle,ThymeLeaf, BootStrap, JavaScript, Aws(rds, route53), lets`encrypt  
 
 ## 설계
+[스프링 시큐리티]  
+SecurityFilterChain이 제공하는 기본 보안 설정과 csrf 토큰을 사용했습니다.  
+
 [화면]  
 스프링 MVC와 타임리프로 설계했습니다. SSR이지만 POST 메서드는 UI/UX를 위해 fetch api를 적용했습니다.  
 url을 restful하게 지었습니다.  
@@ -62,6 +65,23 @@ DB테이블은 리뷰(N)-유저(1) N:1 관계로 설정했습니다.
 DB테이블은 게시판(1)-댓글(N)을 1:N 관계로 설정했습니다.  
 비밀 글로 작성하면 작성자와 관리자만 볼 수 있습니다.  
 *페이징과 검색 기능이 있습니다.  
+
+## 이번 프로젝트로 알게 된 점
+JPA 객체 그래프 사상으로 인한 한계 (일부만 조회할 수 없다)  
+*JPA 1:N 관계에서, N이 페치 조인 대상이면 N을 where절에 쓸 수 없다.  
+
+db unique 제약 조건 예외는 검증 로직만으로는 동시성 문제를 해결 할 수 없어서 공통 예외 처리가 필요하다.  
+
+ResponseEntity와 ModelAndView를 동적으로 반환하려면 메서드 반환형을 Object로 하면 된다.  
+*검증에 따라 에러메시지와 뷰를 동적으로 보내는 로직이 있었습니다.  
+
+@RequestBody는 fetch api에서 text/plain로 보내면 자동으로 형변환을 안해준다. applicaion/json 쓰자.  
+*applicaion/json은 key없이 value만 보내도 JSON.stringfiy를 쓸 수 있다.  
+
+
+## 개발 후기
+실무처럼 해보고자 백엔드 방어 코드에 공을 들였습니다.  
+스프링 시큐리티 CSP를 적용하니 카카오 지도 API, 포트원 결제 API가 원활하지 않게 동작해서 적용을 못했습니다.  
 
 ## 디자인 미리보기
 
