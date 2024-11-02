@@ -6,8 +6,11 @@ https://dlpoma.store
 POMA는 다양한 종목의 스포츠를 편리하게 즐길 수 있는 플랫폼입니다.  
 구장 예약, 매칭 기능을 통해 사용자들이 편리하게 스포츠를 즐길 수 있습니다.
 
+# 팀원 
+총 8명으로 이루어진 팀 입니다. 저는 백엔드와 전체적인 프로젝트 관리를 맡았습니다.  
+
 ## 프로젝트 스택
-SpringBoot, SpringSecurity, Jpa, Gradle, Aws(rds, route53), lets`encrypt  
+SpringBoot3, SpringSecurity6, Jpa, Gradle, Aws(rds, route53), lets`encrypt  
 ThymeLeaf, BootStrap, JavaScript
 
 ## 설계
