@@ -9,6 +9,9 @@ POMA는 다양한 종목의 스포츠를 편리하게 즐길 수 있는 플랫�
 # 팀원 
 총 8명으로 이루어진 팀 입니다. 저는 백엔드와 전체적인 프로젝트 관리를 맡았습니다.  
 
+# 개발 기간
+2024-03-19 ~ 2024-09-10 
+
 ## 프로젝트 스택
 SpringBoot3, SpringSecurity6, Jpa, Gradle, Aws(rds, route53), lets`encrypt  
 ThymeLeaf, BootStrap, JavaScript
