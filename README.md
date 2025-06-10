@@ -53,8 +53,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
 <ul>
   <li>@EnableWebSecurity와 csrf 토큰 적용</li>
   <li>restful url 고민하다 new 키워드 써도되는거 알게 됨</li>
-  <li>spring, jpa, thymeLeaf 학습 이후 처음 적용한 프로젝트라 코드가 클린하지 않음<br>
-    → tama api 프로젝트는 클린합니다</li>
+  <li>spring, jpa, thymeLeaf 학습 이후 첫 프로젝트라 코드가 클린하지 않음</li>
 </ul>
 
 ### UI/UX
