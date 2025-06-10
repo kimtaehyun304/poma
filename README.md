@@ -18,92 +18,69 @@ POMA는 다양한 스포츠를 즐길 수 있는 플랫폼입니다. 구장 예�
 프로젝트 스택  
 spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap  
 
-## 학습한 내용
+
+### 학습 내용
 <ul>
   <li>
-    1:N 연관 관계는 N을 페치 조인하면 N은 where절 불가. (영속성 컨텍스트 충돌)  
+    스프링 시큐리티 CSP를 적용하니 외부 API(카카오 지도, 포트원) CSS 못 불러옴<br>
+    → 주소를 CSP 화이트 리스트에 추가하려해도 난독화 돼있어서 주소 확인 실패
   </li>
   <li>
-    저장 로직은 중복 검사해도 동시에 요청오면 예외 발생 (db unique 공통 예외 처리 필요)  
+    로그인 성공하면 reffer url로 redirect 하기
   </li>
   <li>
-   조건에 따라 ResponseEntity 또는 ModelAndView를 반환하려면 메서드 반환형을 Object로 지정
+    1:N 연관 관계는 N을 페치 조인하면 N은 where절 불가 (영속성 컨텍스트 충돌)  
   </li>
-    <li>
-   조건에 따라 ResponseEntity 또는 ModelAndView를 반환하려면 메서드 반환형을 Object로 지정
+  <li>
+    저장 로직은 중복 검사해도 동시에 요청 오면 예외 발생 (db unique 공통 예외 처리 필요)  
   </li>
 </ul>
 
+### 개선할 점
+<ul>
+  <li>
+    <s>조건에 따라 ResponseEntity 또는 String(ModelAndView)를 반환하려면 메서드 반환형을 Object로 지정</s><br>
+    → 지금 보니 공통 예외처리하면 String 반환형 가능
+  </li>
+  <li>
+    <s>@RequestBody는 text/plain로 오면 자동 형변환 안해줌. text/plain 대신 applicaion/json 쓰자. </s><br>
+    <s>applicaion/json은 value만 있어도 JSON.stringfiy 가능</s><br>
+     → 지금 보니 text 인데 json으로 보내는 건 표준에 안맞는 것 같습니다
+  </li>  
+</ul>
 
-@RequestBody는 fetch api에서 text/plain로 보내면 자동으로 형변환을 안해준다. applicaion/json 쓰자.  
-*applicaion/json은 key없이 value만 보내도 JSON.stringfiy를 쓸 수 있다.  
+### 기타
+<ul>
+  <li>@EnableWebSecurity와 csrf 토큰 적용</li>
+  <li>restful url 고민하다 new 키워드 써도되는거 알게 됨</li>
+  <li>jpa, thymeLeaf 학습 이후 처음 적용한 프로젝트</li>
+</ul>
 
-
-## 개발 후기
-실무처럼 해보고자 백엔드 방어 코드를 신경 썼습니다.  
-스프링 시큐리티 CSP를 적용하니 카카오 지도 API, 포트원 결제 API가 원활하지 않게 동작해서 적용을 못했습니다.  
-
-## 디자인 미리보기
-
-### 회원가입
-<p align="center">
-<img src="https://github.com/user-attachments/assets/1a564d2c-1bab-4639-a212-b46c70318ff6" width="50%" height="50%"/>
-</p>
-
-### 로그인
-<p align="center">
-<img src="https://github.com/user-attachments/assets/15c42d39-7d74-4850-9e07-80bb4aa8ba6b" width="50%" height="50%"/>
-</p>
-
-### 분실 계정 찾기
-<p align="center">
-<img src="https://github.com/user-attachments/assets/be053b30-18b2-4011-b7a5-80eddbe9bd03" width="50%" height="50%"/>
-</p>
-
-### 마이페이지
-<p align="center">
-<img src="https://github.com/user-attachments/assets/d5489aed-a78e-4e59-8055-c99bb383c533" width="50%" height="50%"/>
-</p>
-
-### 관리자 페이지
-<p align="center">
-<img src="https://github.com/user-attachments/assets/904d4c24-7c77-45e0-a30b-d5e78ad2f120" width="50%" height="50%"/>
-</p>
-
-<p align="center">
-<img src="https://github.com/user-attachments/assets/dd6c9852-b007-46a5-b6a8-a1d6f8e71e3c" width="50%" height="50%"/>
-</p>
-
-### 메인 페이지
+### UI/UX
+<h4 align="center">메인 페이지</h4>
 <p align="center">
 <img src="https://github.com/user-attachments/assets/0888f4c6-6062-4016-9dda-0f2f571e83b2" width="50%" height="50%"/>
 </p>
 
-### 매치
+<h4 align="center">경기 매칭</h4>
 <p align="center">
 <img src="https://github.com/user-attachments/assets/c8e7dd30-e881-4868-b07d-129649a2ee76" width="50%" height="50%"/>
 </p>
 
+<h4 align="center">경기 매칭 디테일</h4>
 <p align="center">
 <img src="https://github.com/user-attachments/assets/043ce53f-9a90-4586-8822-2c6e6f0678ea" width="50%" height="50%"/>
 </p>
 
-### 구장 예약
+<h4 align="center">구장 예약</h4>
 <p align="center">
 <img src="https://github.com/user-attachments/assets/2c17759a-da31-4834-a7c0-3da393ad58f4" width="50%" height="50%"/>
 </p>
 
-### 고객 센터
+<h4 align="center">고객 센터</h4>
 <p align="center">
 <img src="https://github.com/user-attachments/assets/771149c7-c421-4b11-aa97-5d54cf8e1e9d" width="50%" height="50%"/>
 </p>
 
-### 멘토 멘티
-<p align="center">
-<img src="https://github.com/user-attachments/assets/31d13549-d7c0-451d-a0e5-5c202cad85de" width="50%" height="50%"/>
-</p>
-
-
-
-
+분실 계정 찾기, 마이페이지, 멘토 멘티, 관리자 페이지, 분실 계정 찾기 등..
 
