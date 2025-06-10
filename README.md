@@ -19,24 +19,30 @@ POMA는 다양한 스포츠를 즐길 수 있는 플랫폼입니다. 구장 예�
 spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap  
 
 
-### 학습 내용
+### 어필
 <ul>
   <li>
-    로그인 성공하면 reffer url로 redirect 하기
+    좋은 사용자 경혐을 위해 로그인 성공하면 reffer url로 redirect
   </li>
   <li>
-    1:N 연관 관계는 N을 페치 조인하면 N은 where절 불가 (영속성 컨텍스트 충돌)  
+    1:N 연관 관계에서 N을 페치 조인한 경우, where절 N 사용 자제<br>
+    → 영속성 컨텍스트 충돌하기 때문
   </li>
   <li>
-    저장 로직은 중복 검사해도 동시에 요청 오면 예외 발생 (db unique 공통 예외 처리 필요)  
+    저장 로직은 중복 검사해도 동시에 요청 오면 예외 발생<br>
+     → 공통 예외 핸들러에 db unique 예외 추가
+  </li>
+  <li>
+    보안을 위해 @EnableWebSecurity와 csrf 토큰 적용
   </li>
 </ul>
 
-### 개선할 점
+### 기타
 <ul>
   <li>
-    스프링 시큐리티 CSP를 적용하니 외부 API(카카오 지도, 포트원) CSS 못 불러옴<br>
-    → 주소를 CSP 화이트 리스트에 추가하려했는데, 난독화 돼있어서 주소 확인 실패
+    스프링 시큐리티 CSP를 적용하니 카카오 지도 CSS 못 불러옴<br>
+    → 카카오 지도 자체는 CSP 화이트 리스트에 추가했지만, 내부 라이브러리가 CSP에 의해 막힘<br>
+    → 내부 라이브러리가 난독화 돼있어서 화이트 리스트에 주소 추가 불가
   </li>
   <li>
     <s>조건에 따라 ResponseEntity 또는 String(ModelAndView)를 반환하려면 메서드 반환형을 Object로 지정</s><br>
@@ -47,13 +53,8 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
     <s>applicaion/json은 value만 있어도 JSON.stringfiy 가능</s><br>
      → 지금 보니 text 인데 json으로 보내는 건 표준에 안맞는 것 같습니다
   </li>  
-</ul>
-
-### 기타
-<ul>
-  <li>@EnableWebSecurity와 csrf 토큰 적용</li>
-  <li>restful url 고민하다 new 키워드 써도되는거 알게 됨</li>
-  <li>spring, jpa, thymeLeaf 학습 이후 첫 프로젝트라 코드가 클린하지 않음</li>
+    <li>restful url 고민하다 new 키워드 써도되는거 알게 됨</li>
+    <li>spring, jpa, thymeLeaf 학습 이후 첫 프로젝트라 코드가 클린하지 않음</li>
 </ul>
 
 ### UI/UX
