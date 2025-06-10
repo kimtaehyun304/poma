@@ -36,7 +36,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
 <ul>
   <li>
     스프링 시큐리티 CSP를 적용하니 외부 API(카카오 지도, 포트원) CSS 못 불러옴<br>
-    → 주소를 CSP 화이트 리스트에 추가하려해도 난독화 돼있어서 주소 확인 실패
+    → 주소를 CSP 화이트 리스트에 추가하려했는데, 난독화 돼있어서 주소 확인 실패
   </li>
   <li>
     <s>조건에 따라 ResponseEntity 또는 String(ModelAndView)를 반환하려면 메서드 반환형을 Object로 지정</s><br>
