@@ -55,7 +55,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
   <li>
     <s>@RequestBody는 text/plain로 오면 자동 형변환 안해줌. text/plain 대신 applicaion/json 쓰자. </s><br>
     <s>applicaion/json은 value만 있어도 JSON.stringfiy 가능</s><br>
-     → text 인데 json으로 보내는 건 부적절
+     → text 인데 json으로 보내는 건 부적절, 귀찮아도 key-value로 보내는 게 적절
   </li>  
     <li>
       개발, 배포 프로젝트 따로 썼다가 합침<br>
