@@ -15,8 +15,9 @@ async function joinMatch() {
         "X-CSRF-TOKEN" : csrfToken
     };
     const body = userIdList
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch(`https://dlpoma.store/mercenaryMatch/${mercenaryMatchId}/user/new`, {
+        const response = await fetch(`${API_URL}/mercenaryMatch/${mercenaryMatchId}/user/new`, {
             method: "POST", headers: headers, body: JSON.stringify(body)
         });
 

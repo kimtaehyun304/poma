@@ -17,8 +17,9 @@ async function editMembers() {
     };
 
     let body = {'memberIdList': memberIdList, 'mercenaryIdList': mercenaryIdList}
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch(`https://dlpoma.store/mercenaryMatch/${mercenaryMatchId}/user/edit`, {
+        const response = await fetch(`${API_URL}/mercenaryMatch/${mercenaryMatchId}/user/edit`, {
             method: "POST", headers: headers, body: JSON.stringify(body)
         });
 

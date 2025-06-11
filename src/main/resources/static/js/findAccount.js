@@ -27,8 +27,9 @@ async function send(email) {
         "X-CSRF-TOKEN" : csrfToken
     };
     const body = email;
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch("https://dlpoma.store/user/findAccount", {
+        const response = await fetch(`${API_URL}/user/findAccount`, {
             method: "POST", headers: headers, body: body
         });
         let responseText = await response.text();

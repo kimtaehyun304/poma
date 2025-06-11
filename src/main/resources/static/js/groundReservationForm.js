@@ -40,9 +40,9 @@ document.querySelector(".submitBtn").addEventListener("click", function (e) {
             match: match,
             userIdList : userIdList
         };
-
+        const API_URL = window.location.origin;
         try {
-            const response = await fetch(`https://dlpoma.store/reservation/${sports}`, {
+            const response = await fetch(`${API_URL}/${sports}`, {
                 method: "POST", headers: headers, body: JSON.stringify(body)
             });
             let data = await response.text();
@@ -97,9 +97,9 @@ document.querySelector("#matchCategory").addEventListener("change", (e) => {
 
     async function getTeamMembers() {
         let gender =   document.querySelector("#gender").value
-
+        const API_URL = window.location.origin;
         try {
-            const response = await fetch(`https://dlpoma.store/api/team/users?gender=${gender}`, {
+            const response = await fetch(`${API_URL}/api/team/users?gender=${gender}`, {
                 method: "GET"
             });
 

@@ -83,8 +83,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 "X-CSRF-TOKEN" : csrfToken
             };
             const body = {loginId: loginId.value, password: password.value, name: name.value, email: email.value, gender: gender.value, phone: phone.value};
+            const API_URL = window.location.origin;
             try {
-                const response = await fetch("https://dlpoma.store/user/signup", {
+                const response = await fetch(`${API_URL}/user/signup`, {
                     method: "POST", headers: headers, body: JSON.stringify(body)
                 });
                 let responseText = await response.text()

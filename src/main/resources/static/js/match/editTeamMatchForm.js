@@ -14,9 +14,9 @@ async function editMembers() {
         "x-requested-with": "XMLHttpRequest",
         "X-CSRF-TOKEN" : csrfToken
     };
-
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch(`https://dlpoma.store/teamMatch/${teamMatchId}/user/edit`, {
+        const response = await fetch(`${API_URL}/teamMatch/${teamMatchId}/user/edit`, {
             method: "POST", headers: headers, body: JSON.stringify(userIdList)
         });
 

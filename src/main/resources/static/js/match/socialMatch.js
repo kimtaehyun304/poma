@@ -27,8 +27,9 @@ async function joinMatch() {
         "X-CSRF-TOKEN" : csrfToken
     };
     const body = socialMatchId
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch(`https://dlpoma.store/socialMatch/${socialMatchId}`, {
+        const response = await fetch(`${API_URL}/socialMatch/${socialMatchId}`, {
             method: "POST", headers: headers, body: JSON.stringify(body)
         });
 
@@ -64,8 +65,9 @@ async function cancelMatch() {
         "X-CSRF-TOKEN" : csrfToken
     };
     const body = socialMatchId
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch(`https://dlpoma.store/socialMatch/${socialMatchId}`, {
+        const response = await fetch(`${API_URL}/socialMatch/${socialMatchId}`, {
             method: "DELETE", headers: headers, body: body
         });
 

@@ -18,9 +18,9 @@ async function joinMatch() {
     let regex = /\/teamMatch\/(\w+)/;
     let sports = currentUrl.match(regex)[1];
 
-
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch(`https://dlpoma.store/teamMatch/${teamMatchId}/user/new`, {
+        const response = await fetch(`${API_URL}/teamMatch/${teamMatchId}/user/new`, {
             method: "GET"
         });
 
@@ -60,9 +60,9 @@ async function cancelMatch() {
         "x-requested-with": "XMLHttpRequest",
         "X-CSRF-TOKEN" : csrfToken
     };
-
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch(`https://dlpoma.store/teamMatch/${teamMatchId}/user`, {
+        const response = await fetch(`${API_URL}/teamMatch/${teamMatchId}/user`, {
             method: "DELETE", headers: headers
         });
 

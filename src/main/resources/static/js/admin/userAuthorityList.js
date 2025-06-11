@@ -18,8 +18,9 @@ async function grant() {
         "X-CSRF-TOKEN" : csrfToken
     };
     const body = {id: pkId, authority: authority};
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch("https://dlpoma.store/admins", {
+        const response = await fetch(`${API_URL}/admins`, {
             method: "POST", headers: headers, body: JSON.stringify(body)
         });
         if (response.status === 201){

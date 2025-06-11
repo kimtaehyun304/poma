@@ -33,8 +33,9 @@ if (saveBtn != null) {
                 content: contentElement.value,
                 secretElement: secretElement.value
             };
+            const API_URL = window.location.origin;
             try {
-                const response = await fetch("https://dlpoma.store/customer", {
+                const response = await fetch(`${API_URL}/customer`, {
                     method: "POST", headers: headers, body: JSON.stringify(body)
                 });
                 if (response.status === 201)

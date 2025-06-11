@@ -47,9 +47,9 @@ let clickEvent = function (e) {
                     content: form.querySelector("textarea").value,
                     parentId: e.target.parentElement.querySelector('.commentId').textContent
                 };
-
+                const API_URL = window.location.origin;
                 try {
-                    const response = await fetch(`https://dlpoma.store/customers/${postId}/comments`, {
+                    const response = await fetch(`${API_URL}/customers/${postId}/comments`, {
                         method: "POST", headers: headers, body: JSON.stringify(body)
                     });
 
@@ -118,9 +118,9 @@ form.addEventListener("submit", function (e) {
             const body = {
                 content: document.querySelector(".parentTextarea").value
             };
-
+            const API_URL = window.location.origin;
             try {
-                const response = await fetch(`https://dlpoma.store/customers/${postId}/comments`, {
+                const response = await fetch(`${API_URL}/customers/${postId}/comments`, {
                     method: "POST", headers: headers, body: JSON.stringify(body)
                 });
 

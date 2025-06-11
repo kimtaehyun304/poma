@@ -5,9 +5,9 @@ myTr.forEach((target) => target.addEventListener("click", validateUser));
 
 async function validateUser() {
     let postId = this.firstElementChild.textContent
-
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch(`https://dlpoma.store/customers/${postId}`, {
+        const response = await fetch(`${API_URL}/customers/${postId}`, {
             method: "GET"
         });
         let responseText = await response.text()

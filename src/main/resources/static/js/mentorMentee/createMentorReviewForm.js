@@ -41,8 +41,9 @@ reviewForm.addEventListener("submit", function (e) {
                 description: textarea.value,
                 sports: sports.value
             };
+            const API_URL = window.location.origin;
             try {
-                const response = await fetch("https://dlpoma.store/reviews/form", {
+                const response = await fetch(`${API_URL}/reviews/form`, {
                     method: "POST", headers: headers, body: JSON.stringify(body)
                 });
 
@@ -70,9 +71,9 @@ searchForm.addEventListener("submit", function (e) {
     getMentors()
     async function getMentors() {
         let name = document.querySelector("input[name='name']").value
-
+        const API_URL = window.location.origin;
         try {
-            const response = await fetch(`https://dlpoma.store/api/mentors?name=${name}`, {
+            const response = await fetch(`${API_URL}/api/mentors?name=${name}`, {
                 method: "GET"
             });
 

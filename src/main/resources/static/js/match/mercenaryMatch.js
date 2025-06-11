@@ -23,8 +23,10 @@ async function joinAsMercenary() {
     };
     //const body = {mercenaryMatchId: mercenaryMatchId, teamId: teamId};
     const body = teamId;
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch(`https://dlpoma.store/mercenaryMatch/${mercenaryMatchId}/user/mercenary`, {
+
+        const response = await fetch(`${API_URL}/mercenaryMatch/${mercenaryMatchId}/user/mercenary`, {
             method: "POST", headers: headers, body: body
         });
         if (response.status === 201) {
@@ -58,8 +60,9 @@ async function cancelMercenary() {
     };
     //const body = {mercenaryMatchId: mercenaryMatchId, teamId: teamId};
     const body = teamId;
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch(`https://dlpoma.store/mercenaryMatch/${mercenaryMatchId}/user/mercenary`, {
+        const response = await fetch(`${API_URL}/mercenaryMatch/${mercenaryMatchId}/user/mercenary`, {
             method: "DELETE", headers: headers, body: body
         });
         if (response.status === 200) {
@@ -86,8 +89,9 @@ submitBtn.forEach((target) => target.addEventListener("click", joinMatch));
 async function joinMatch() {
     let mercenaryMatchId = this.parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("mercenaryMatchId")[0].textContent
 
+    const API_URL = window.location.origin;
     try {
-        const response = await fetch(`https://dlpoma.store/mercenaryMatch/${mercenaryMatchId}/user/new`, {
+        const response = await fetch(`${API_URL}/mercenaryMatch/${mercenaryMatchId}/user/new`, {
 
         });
 
@@ -114,7 +118,7 @@ cancelBtn.forEach((target) => target.addEventListener("click", cancelMatch));
 
 async function cancelMatch() {
     let mercenaryMatchId = this.parentElement.parentElement.getElementsByClassName("mercenaryMatchId")[0].textContent
-
+    const API_URL = window.location.origin;
     try {
         const headers = {
             "Content-Type": "application/json;charset=UTF-8",
@@ -122,7 +126,7 @@ async function cancelMatch() {
             "X-CSRF-TOKEN" : csrfToken
         };
 
-        const response = await fetch(`https://dlpoma.store/mercenaryMatch/${mercenaryMatchId}/user`, {
+        const response = await fetch(`${API_URL}/mercenaryMatch/${mercenaryMatchId}/user`, {
             method: "DELETE", headers: headers
         });
 

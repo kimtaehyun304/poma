@@ -33,8 +33,9 @@ if(loginForm != null) {
                 "X-CSRF-TOKEN": csrfToken
             };
             const body = {loginId: loginId.value, password: password.value,};
+            const API_URL = window.location.origin;
             try {
-                const response = await fetch("https://dlpoma.store/user/signin", {
+                const response = await fetch(`${API_URL}/user/signin`, {
                     method: "POST", headers: headers, body: JSON.stringify(body)
                 });
 
@@ -54,7 +55,7 @@ if(loginForm != null) {
 //손님 계정 로그인
 let isRunning = false;
 let guest = document.querySelectorAll(".GuestLink");
-
+const API_URL = window.location.origin;
 if(guest != null) {
     guest.forEach((target) => target.addEventListener("click", function (event) {
         event.preventDefault()
@@ -75,7 +76,7 @@ if(guest != null) {
             };
             const body = {loginId: loginId};
             try {
-                const response = await fetch("https://dlpoma.store/user/signin", {
+                const response = await fetch(`${API_URL}/user/signin`, {
                     method: "POST", headers: headers, body: JSON.stringify(body)
                 });
 

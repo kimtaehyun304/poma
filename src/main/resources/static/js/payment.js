@@ -16,6 +16,7 @@ document.querySelector("#pay-btn").addEventListener("click", function (e) {
 
     let myMoney = document.getElementById("money")
     let amount = 10000
+    const API_URL = window.location.origin;
     IMP.init("imp64246530"); // 가맹점 식별코드
     IMP.request_pay({
         pg: 'kakaopay.TC0ONETIME', // PG사 코드표에서 선택
@@ -25,7 +26,7 @@ document.querySelector("#pay-btn").addEventListener("click", function (e) {
         amount: amount, // 가격
         //구매자 정보 ↓
         buyer_name: buyer_name,
-        m_redirect_url: `https://dlpoma.store/paymentMobile?url=${window.location.href}`,
+        m_redirect_url: `${API_URL}/paymentMobile?url=${window.location.href}`,
     }, async function (response) { // callback
         if (response.success) {
             await charge(response.imp_uid)
@@ -44,8 +45,9 @@ document.querySelector("#pay-btn").addEventListener("click", function (e) {
             "X-CSRF-TOKEN" : csrfToken
         };
         const body = imp_uid;
+        const API_URL = window.location.origin;
         try {
-            const response = await fetch("https://dlpoma.store/payment", {
+            const response = await fetch(`${API_URL}/payment`, {
                 method: "POST", headers: headers, body: body
             });
             if (response.status === 201) {

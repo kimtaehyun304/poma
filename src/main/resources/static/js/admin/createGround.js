@@ -26,8 +26,9 @@ document.querySelector("form").addEventListener("submit", function (e) {
             "X-CSRF-TOKEN" : csrfToken
         };
         const body = {location: location, name: name, price: price};
+        const API_URL = window.location.origin;
         try {
-            const response = await fetch("https://dlpoma.store/ground", {
+            const response = await fetch(`${API_URL}/ground`, {
                 method: "POST", headers: headers, body: JSON.stringify(body)
             });
             if (response.status === 201)

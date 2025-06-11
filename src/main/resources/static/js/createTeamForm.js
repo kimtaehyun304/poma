@@ -12,8 +12,9 @@ document.getElementById("joinBtn").addEventListener("click", function (e) {
             "X-CSRF-TOKEN" : csrfToken
         };
         const body = name;
+        const API_URL = window.location.origin;
         try {
-            const response = await fetch("https://dlpoma.store/team", {
+            const response = await fetch(`${API_URL}/team`, {
                 method: "POST", headers: headers, body: body
             });
             const responseText = await response.text();
