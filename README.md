@@ -45,7 +45,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
   </li>
 </ul>
 
-### 개선 중
+### 개선
 개발 경험이 적을때라 코드가 클린하지 않아서 개선 중
 <ul>
   <li>
