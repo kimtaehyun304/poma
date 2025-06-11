@@ -73,7 +73,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
       → db 환경은 application.yml 과 application-prod.yml로 구분 <br>
       → fetch api url은 window.location.origin 쓰면 알아서 구분 됨
     </li>
-  <li>뷰 컨트롤러에 api 있는거 따로 분리 필요</li>
+  <li>뷰 컨트롤러에 api 있는거 api 컨트롤러 옮기기 필요</li>
 </ul>
 
 ### UI/UX
