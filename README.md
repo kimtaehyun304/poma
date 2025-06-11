@@ -22,6 +22,17 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
 ### 어필
 <ul>
   <li>
+    보안을 위해 스프링 시큐리티 사용
+    <ul>
+      <li>@EnableWebSecurity와 csrf 토큰 적용</li>
+      <li>
+        CSP 적용하고 카카오 지도 예외 등록<br>
+        → 지도 페이지만 unsafe-inline하기 위해 별도 필터체인 등록
+      </li>
+    </ul>
+  </li>
+  </li>
+  <li>
     좋은 사용자 경혐을 위해 로그인 성공하면 reffer url로 redirect
   </li>
   <li>
@@ -32,29 +43,25 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
     저장 로직은 중복 검사해도 동시에 요청 오면 예외 발생<br>
      → 공통 예외 핸들러에 db unique 예외 추가
   </li>
-  <li>
-    보안을 위해 @EnableWebSecurity와 csrf 토큰 적용
-  </li>
 </ul>
 
-### 기타
+### 개선 중
+개발 경험이 적을때라 코드가 클린하지 않아서 개선 중
 <ul>
   <li>
-    스프링 시큐리티 CSP를 적용하니 카카오 지도 CSS 못 불러옴<br>
-    → 카카오 지도 자체는 CSP 화이트 리스트에 추가했지만, 내부 라이브러리가 CSP에 의해 막힘<br>
-    → 내부 라이브러리가 난독화 돼있어서 화이트 리스트에 주소 추가 불가
-  </li>
-  <li>
     <s>조건에 따라 ResponseEntity 또는 String(ModelAndView)를 반환하려면 메서드 반환형을 Object로 지정</s><br>
-    → 지금 보니 공통 예외처리하면 String 반환형 가능
+    → 공통 예외처리하면 String 반환형 가능
   </li>
   <li>
     <s>@RequestBody는 text/plain로 오면 자동 형변환 안해줌. text/plain 대신 applicaion/json 쓰자. </s><br>
     <s>applicaion/json은 value만 있어도 JSON.stringfiy 가능</s><br>
-     → 지금 보니 text 인데 json으로 보내는 건 표준에 안맞는 것 같습니다
+     → text 인데 json으로 보내는 건 부적절, 귀찮아도 key-value로 보내는 게 적절
   </li>  
-    <li>restful url 고민하다 new 키워드 써도되는거 알게 됨</li>
-    <li>spring, jpa, thymeLeaf 학습 이후 첫 프로젝트라 코드가 클린하지 않음</li>
+    <li>
+      개발, 배포 프로젝트 따로 썼다가 합침<br>
+      → db 환경은 application.yml 과 application-prod.yml로 구분 <br>
+      → fetch api url은 window.location.origin 사용
+    </li>
 </ul>
 
 ### UI/UX
