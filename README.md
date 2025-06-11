@@ -58,7 +58,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
      → text 인데 json으로 보내는 건 부적절, 귀찮아도 key-value로 보내는 게 적절
   </li>  
     <li>
-      개발, 배포 프로젝트 따로 썼다가 합침<br>
+      개발, 배포 프로젝트 따로 사용하다가 동기화하기 힘들어서 합침<br>
       → db 환경은 application.yml 과 application-prod.yml로 구분 <br>
       → fetch api url은 window.location.origin 사용
     </li>
