@@ -60,7 +60,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
     <li>
       개발, 배포 프로젝트 따로 사용하기 힘들어서 합침<br>
       → db 환경은 application.yml 과 application-prod.yml로 구분 <br>
-      → fetch api url은 window.location.origin 사용
+      → fetch api url은 window.location.origin 쓰면 알아서 구분 됨
     </li>
 </ul>
 
