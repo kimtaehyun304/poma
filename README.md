@@ -43,6 +43,9 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
     저장 로직은 중복 검사해도 동시에 요청 오면 예외 발생<br>
      → 공통 예외 핸들러에 db unique 예외 추가
   </li>
+  <li>
+    LocalDate 직렬화하면 에러나서 customObjectMapper 사용
+  </li>
 </ul>
 
 ### 개선
