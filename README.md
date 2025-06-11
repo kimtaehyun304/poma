@@ -60,8 +60,8 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
 개발 경험이 적을때라 코드가 클린하지 않아서 개선 중
 <ul>
   <li>
-    <s>조건에 따라 ResponseEntity 또는 String(ModelAndView)를 반환하려면 메서드 반환형을 Object로 지정</s><br>
-    → 공통 예외처리하면 String 반환형 가능
+    <s>조건에 따라 ResponseEntity 또는 view를 반환하려면 메서드 반환형을 Object로 지정</s><br>
+    → 공통 예외처리하면 반환형 String(view) 가능
   </li>
   <li>
     <s>@RequestBody는 text/plain로 오면 자동 형변환 안해주니까 applicaion/json 쓰자. </s><br>
@@ -73,6 +73,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
       → db 환경은 application.yml 과 application-prod.yml로 구분 <br>
       → fetch api url은 window.location.origin 쓰면 알아서 구분 됨
     </li>
+  <li>뷰 컨트롤러에 api 있는거 따로 분리 필요</li>
 </ul>
 
 ### UI/UX
