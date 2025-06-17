@@ -30,6 +30,17 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
         → 지도 페이지만 unsafe-inline하기 위해 별도 필터체인 등록
       </li>
     </ul>
+    <li>
+      1:N 연관 관계에서 N을 페치 조인한 경우, where절 N 사용 자제<br>
+      → 영속성 컨텍스트 충돌하기 때문
+    </li>
+    <li>
+      저장 로직은 중복 검사해도 동시에 요청 오면 예외 발생<br>
+       → 공통 예외 핸들러에 db unique 예외 추가
+    </li>
+    <li>
+      LocalDate 직렬화하면 에러나서 customObjectMapper 사용
+    </li>
     <li>XSS 방어</li>
       <ul>
         <li>js 이벤트 onClick 대신 eventListener 사용</li>
@@ -43,17 +54,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
         <li>401응답 받으면 confirm으로 로그인 페이지 이동 제안</li>
       </ul>
     </li>
-    <li>
-      1:N 연관 관계에서 N을 페치 조인한 경우, where절 N 사용 자제<br>
-      → 영속성 컨텍스트 충돌하기 때문
-    </li>
-    <li>
-      저장 로직은 중복 검사해도 동시에 요청 오면 예외 발생<br>
-       → 공통 예외 핸들러에 db unique 예외 추가
-    </li>
-    <li>
-      LocalDate 직렬화하면 에러나서 customObjectMapper 사용
-    </li>
+
 </ul>
 
 ### 개선
