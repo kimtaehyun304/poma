@@ -54,7 +54,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
         <li>401응답 받으면 confirm으로 로그인 페이지 이동 제안</li>
       </ul>
     </li>
-
+    <li>대댓글 구현</li>
 </ul>
 
 ### 개선
@@ -103,5 +103,5 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
 <img src="https://github.com/user-attachments/assets/771149c7-c421-4b11-aa97-5d54cf8e1e9d" width="50%" height="50%"/>
 </p>
 
-분실 계정 찾기, 마이페이지, 멘토 멘티, 관리자 페이지, 분실 계정 찾기 등..
+분실 계정 찾기, 멘토 멘티, 마이페이지, 관리자 페이지 등..
 
