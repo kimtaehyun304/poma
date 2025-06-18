@@ -52,7 +52,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
       <ul>
         <li>로그인 성공하면 reffer url로 redirect</li>
         <li>401응답 받으면 confirm으로 로그인 페이지 이동 제안</li>
-        <li>로그인 페이지는 브라우저 캐시 비활성화</li>
+        <li>뒤로가기를 고려해 로그인 페이지는 브라우저 캐시 비활성화</li>
       </ul>
     </li>
     <li>대댓글 구현</li>
