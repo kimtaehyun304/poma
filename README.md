@@ -52,6 +52,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
       <ul>
         <li>로그인 성공하면 reffer url로 redirect</li>
         <li>401응답 받으면 confirm으로 로그인 페이지 이동 제안</li>
+        <li>로그인 페이지는 브라우저 캐시 비활성화</li>
       </ul>
     </li>
     <li>대댓글 구현</li>
@@ -62,7 +63,7 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
 <ul>
   <li>
     <s>조건에 따라 ResponseEntity 또는 view를 반환하려면 메서드 반환형을 Object로 지정</s><br>
-    → 공통 예외처리하면 반환형 String(view) 가능
+    → 공통 예외처리하면 반환형 String(view)가능
   </li>
   <li>
     <s>@RequestBody는 text/plain로 오면 자동 형변환 안해주니까 applicaion/json 쓰자. </s><br>
