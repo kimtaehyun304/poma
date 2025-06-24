@@ -20,16 +20,20 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
 
 
 ### 어필
+[스프링 시큐리티](https://github.com/kimtaehyun304/poma/blob/e3c4a97d4deb1eb61b1e4075d94dff6c39c7e2a5/src/main/java/goinmul/sportsmanage/config/SecurityConfig.java#L47)
 <ul>
-  <li>
-    보안을 위해 스프링 시큐리티 사용
-    <ul>
-      <li>@EnableWebSecurity와 csrf 토큰 적용</li>
-      <li>
-        CSP 적용하고 카카오 지도 예외 등록<br>
-        → 지도 페이지만 unsafe-inline하기 위해 별도 필터체인 등록
-      </li>
-    </ul>
+    <li>@EnableWebSecurity와 csrf 토큰 적용</li>
+    <li>
+        CSP 적용 (카카오 지도 페이지만 unsafe-inline하기 위해 별도 필터체인 등록)
+    </li>
+</ul>
+XSS 방어
+<ul>
+    <li>js 이벤트 onClick 대신 eventListener 사용</li>
+    <li>세션 쿠키 httpOnly, secure 적용</li>
+</ul>
+기타
+<ul>
     <li>
       1:N 연관 관계에서 N을 페치 조인한 경우, where절 N 사용 자제<br>
       → 영속성 컨텍스트 충돌하기 때문
@@ -41,22 +45,17 @@ spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap
     <li>
       LocalDate 직렬화하면 에러나서 customObjectMapper 사용
     </li>
-    <li>XSS 방어</li>
-      <ul>
-        <li>js 이벤트 onClick 대신 eventListener 사용</li>
-        <li>세션 쿠키 httpOnly, secure 적용</li>
-      </ul>
-    </li>
-    <li>
-      좋은 사용자 경험 제공
-      <ul>
-        <li>로그인 성공하면 reffer url로 redirect</li>
-        <li>401응답 받으면 confirm으로 로그인 페이지 이동 제안</li>
-        <li>뒤로가기를 고려해 로그인 페이지는 브라우저 캐시 비활성화</li>
-      </ul>
-    </li>
-    <li>대댓글 구현</li>
+  <li>대댓글 구현</li>
 </ul>
+좋은 사용자 경험 제공
+<ul>
+    <li>로그인 성공하면 reffer url로 redirect</li>
+    <li>401응답 받으면 confirm으로 로그인 페이지 이동 제안</li>
+    <li>뒤로가기를 고려해 로그인 페이지는 브라우저 캐시 비활성화</li>
+</ul>
+
+    
+
 
 ### 개선
 개발 경험이 적을때라 코드가 클린하지 않아서 개선 중
