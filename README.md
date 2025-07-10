@@ -80,27 +80,27 @@ XSS 방어
 ### UI/UX
 <h4 align="center">메인 페이지</h4>
 <p align="center">
-<img src="https://github.com/user-attachments/assets/0888f4c6-6062-4016-9dda-0f2f571e83b2" width="50%" height="50%"/>
+<img src="https://github.com/user-attachments/assets/0888f4c6-6062-4016-9dda-0f2f571e83b2" />
 </p>
 
 <h4 align="center">경기 매칭</h4>
 <p align="center">
-<img src="https://github.com/user-attachments/assets/c8e7dd30-e881-4868-b07d-129649a2ee76" width="50%" height="50%"/>
+<img src="https://github.com/user-attachments/assets/c8e7dd30-e881-4868-b07d-129649a2ee76" />
 </p>
 
 <h4 align="center">경기 매칭 디테일</h4>
 <p align="center">
-<img src="https://github.com/user-attachments/assets/043ce53f-9a90-4586-8822-2c6e6f0678ea" width="50%" height="50%"/>
+<img src="https://github.com/user-attachments/assets/043ce53f-9a90-4586-8822-2c6e6f0678ea" />
 </p>
 
 <h4 align="center">구장 예약</h4>
 <p align="center">
-<img src="https://github.com/user-attachments/assets/2c17759a-da31-4834-a7c0-3da393ad58f4" width="50%" height="50%"/>
+<img src="https://github.com/user-attachments/assets/2c17759a-da31-4834-a7c0-3da393ad58f4" />
 </p>
 
 <h4 align="center">고객 센터</h4>
 <p align="center">
-<img src="https://github.com/user-attachments/assets/771149c7-c421-4b11-aa97-5d54cf8e1e9d" width="50%" height="50%"/>
+<img src="https://github.com/user-attachments/assets/771149c7-c421-4b11-aa97-5d54cf8e1e9d" />
 </p>
 
 분실 계정 찾기, 멘토 멘티, 마이페이지, 관리자 페이지 등..
