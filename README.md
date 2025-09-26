@@ -9,39 +9,33 @@
 ### 프로젝트 스킬
 spring (boot 3, security 6), hibernate 6, thymeleaf 3, vanlia js,  bootStrap 4
 
-### 어필
-[스프링 시큐리티](https://github.com/kimtaehyun304/poma/blob/e3c4a97d4deb1eb61b1e4075d94dff6c39c7e2a5/src/main/java/goinmul/sportsmanage/config/SecurityConfig.java#L47)
+### 프로젝트로 얻은 경험
+
+보안
 <ul>
-    <li>@EnableWebSecurity와 csrf 토큰 적용</li>
-    <li>
-        CSP 적용 (카카오 지도 페이지만 unsafe-inline하기 위해 별도 필터체인 등록)
-    </li>
+  <li>csrf 토큰, csp (Content-Security-Policy) 적용</li>
+  <li>
+    <a href="https://github.com/kimtaehyun304/poma/blob/e3c4a97d4deb1eb61b1e4075d94dff6c39c7e2a5/src/main/java/goinmul/sportsmanage/config/SecurityConfig.java#L47">
+      csp 이슈) 카카오 지도 css 누락 → 예외로 unsafe-inline</li>
+    </a>
+  <li>J세션 쿠키에 httpOnly, secure 적용</li>
+  <li>api 응답 xss 이스케이프 처리</li>
 </ul>
-XSS 방어
-<ul>
-    <li>js 이벤트 onClick 대신 eventListener 사용</li>
-    <li>세션 쿠키 httpOnly, secure 적용</li>
-</ul>
+
 기타
 <ul>
-    <li>
-      1:N 연관 관계에서 N을 페치 조인한 경우, where절 N 사용 자제<br>
-      → 영속성 컨텍스트 충돌하기 때문
-    </li>
-    <li>
-      저장 로직은 중복 검사해도 동시에 요청 오면 예외 발생<br>
-       → 공통 예외 핸들러에 db unique 예외 추가
-    </li>
-    <li>
-      LocalDate 직렬화하면 에러나서 customObjectMapper 사용
-    </li>
-  <li>대댓글 구현</li>
+    <li>jpa 페치 조인 컬렉션 필드는 where절 자제 (1차 캐시 결과과 달라지기 때문)</li>
+    <li>저장 전에, 중복 검사해도 동시에 요청 오면 저장 될 수 있음 (unique 제약 조건 필요)</li>
+    <li>LocalDate 직렬화하면 에러나서 objectMapper 커스텀해서 사용</li>
+    <li>대댓글 ajax 구현</li>
 </ul>
-좋은 사용자 경험 제공
+
+UI/UX (좋은 사용자 경험 제공)
 <ul>
-    <li>로그인 성공하면 reffer url로 redirect</li>
-    <li>401응답 받으면 confirm으로 로그인 페이지 이동 제안</li>
-    <li>뒤로가기를 고려해 로그인 페이지는 브라우저 캐시 비활성화</li>
+    <li>로그인 성공 → reffer url로 redirect</li>
+    <li>비 로그인 상태 응답 받음 → confirm 알림으로 로그인 페이지 이동 제안</li>
+    <li>뒤로가기를 고려하여, 로그인 페이지에서는 브라우저 캐시를 비활성화</li>
+    <li>ex) 로그인 상태임에도 뒤로가기로 로그인 페이지에 접근하면, UI상 비로그인 상태로 보일 수 있음</li>
 </ul>
 
 ### 개선
@@ -71,7 +65,8 @@ XSS 방어
   <li>홈 (경기 종목 선택)</li>
   <li>경기 조회·신청·수정·취소</li>
   <li>구장 조회·예약·결제</li>
-  <li>고객 게시판 글·댓글 조회·등록</li>
+  <li>고객 게시판 글 조회·등록 (비밀 글 처리 가능)</li>
+  <li>고객 게시판 댓글 조회·등록</li>
   <li>멘토 리뷰 게시판 (댓글·별점 조회·등록)</li>
   <li>팀 조회·생성</li>
   <li>로그인·회원가입·계정 찾기</li>
