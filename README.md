@@ -19,7 +19,7 @@ spring (boot 3, security 6), hibernate 6, thymeleaf 3, vanlia js,  bootStrap 4
       csp 이슈) 카카오 지도 css 누락 → 예외로 unsafe-inline</li>
     </a>
   <li>J세션 쿠키에 httpOnly, secure 적용</li>
-  <li>api 응답 xss(Cross-Site Scripting) 이스케이프 처리</li>
+  <li>api 응답 xss(Cross-Site-Scripting) 이스케이프 처리</li>
 </ul>
 
 UI/UX (좋은 사용자 경험 제공)
