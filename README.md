@@ -66,11 +66,6 @@ UI/UX (좋은 사용자 경험 제공)
   <li>구장 등록·수정</li>
 </ul>
 
-### erd
-<p align="center">
-<img src="https://github.com/user-attachments/assets/69455699-3fa4-4dd0-9ee9-ce8ea3284cd4"/>
-</p>
-
 ### UI/UX
 <h4 align="center">메인 페이지</h4>
 <p align="center">
