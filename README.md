@@ -1,23 +1,13 @@
+<h1>구장 예약·경기 인원 모집 / 2024-03 ~ 09</h1>
 
-## 소개
-POMA는 다양한 스포츠를 즐길 수 있는 플랫폼입니다. 구장 예약, 경기 매칭을 제공합니다. (배포 중단)  
-
-본인 역할 (팀원 8명)
+### 담당 역할
 <ul>
-  <li>
-    퍼블리싱 결과물을 ThymeLeaf, 반응형으로 변경
-  </li>
-  <li>
-    백엔드 모든 기능 개발 (팀원 작업물 개선)
-  </li>
+  <li>html·css → thymeLeaf·반응형 변경 </li>
+  <li>백엔드 모든 기능 개발 (프로젝트 종료 후 개선)</li>
 </ul>
  
-개발 기간  
-2024-03-19 ~ 2024-09-10 
-
-프로젝트 스택  
-spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap  
-
+### 프로젝트 스킬
+spring (boot 3, security 6), hibernate 6, thymeleaf 3, vanlia js,  bootStrap 4
 
 ### 어필
 [스프링 시큐리티](https://github.com/kimtaehyun304/poma/blob/e3c4a97d4deb1eb61b1e4075d94dff6c39c7e2a5/src/main/java/goinmul/sportsmanage/config/SecurityConfig.java#L47)
@@ -54,9 +44,6 @@ XSS 방어
     <li>뒤로가기를 고려해 로그인 페이지는 브라우저 캐시 비활성화</li>
 </ul>
 
-    
-
-
 ### 개선
 개발 경험이 적을때라 코드가 클린하지 않아서 개선 중
 <ul>
@@ -75,6 +62,31 @@ XSS 방어
       → fetch api url은 window.location.origin 쓰면 알아서 구분 됨
     </li>
   <li>뷰 컨트롤러에 api 있는거 api 컨트롤러로 옮겨야 함</li>
+</ul>
+
+### 페이지
+
+사용자 페이지
+<ul>
+  <li>홈 (경기 종목 선택)</li>
+  <li>경기 조회·신청·수정·취소</li>
+  <li>구장 조회·예약·결제</li>
+  <li>고객 게시판 글·댓글 조회·등록</li>
+  <li>멘토 리뷰 게시판 (댓글·별점 조회·등록)</li>
+  <li>팀 조회·생성</li>
+  <li>로그인·회원가입·계정 찾기</li>
+</ul>
+
+마이 페이지
+<ul>
+  <li>회원 정보 조회·수정</li>
+  <li>가입한 팀 수정</li>
+</ul>
+
+관리자 페이지
+<ul>
+  <li>유저 계정 권환 조회·수정</li>
+  <li>구장 등록·수정</li>
 </ul>
 
 ### UI/UX
