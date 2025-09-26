@@ -32,9 +32,9 @@ UI/UX (좋은 사용자 경험 제공)
 
 기타
 <ul>
-    <li>jpa 페치 조인 컬렉션 필드는 where절 자제 (1차 캐시 결과과 달라지기 때문)</li>
+    <li>jpa 페치 조인 컬렉션 필드는 where절 자제 (이전 1차 캐시 결과와 다를 수 있기 때문)</li>
     <li>저장 전에, 중복 검사해도 동시에 요청 오면 저장 될 수 있음 (unique 제약 조건 필요)</li>
-    <li>java8 LocalDate 직렬화하면 에러나서 objectMapper 커스텀해서 사용</li>
+    <li>java 8 LocalDate 직렬화하면 에러나서 objectMapper 커스텀해서 사용</li>
     <li>대댓글 ajax 구현</li>
 </ul>
 
