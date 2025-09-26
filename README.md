@@ -37,7 +37,7 @@ UI/UX (좋은 사용자 경험 제공)
     <li>java 8 LocalDate 직렬화 에러 → objectMapper 커스텀</li>
     <li>대댓글 ajax 구현</li>
     <li>클린 코드에 대한 지식이 적을 때 진행한 프로젝트라 개선 필요</li>
-    <li>ex) ResponseEntity 제너럴 타입, 오류 메시지를 예외에 담기 등</li>
+    <li>ex) ResponseEntity 제너럴 타입, 오류 메시지를 문자열 → 예외 변경 등</li>
 </ul>
 
 ### 페이지
