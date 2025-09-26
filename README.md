@@ -1,94 +1,93 @@
+<h1>구장 예약·경기 인원 모집 / 2024-03 ~ 09</h1>
 
-## 소개
-POMA는 다양한 스포츠를 즐길 수 있는 플랫폼입니다. 구장 예약, 경기 매칭을 제공합니다. (배포 중단)  
-
-본인 역할 (팀원 8명)
+### 담당 역할
 <ul>
-  <li>
-    퍼블리싱 결과물을 ThymeLeaf, 반응형으로 변경
-  </li>
-  <li>
-    백엔드 모든 기능 개발 (팀원도 했는데 에러 나서 제가 고쳤습니다)
-  </li>
+  <li>html·css → thymeLeaf·반응형 변경 </li>
+  <li>백엔드 모든 기능 개발 (프로젝트 종료 후 개선)</li>
 </ul>
  
-개발 기간  
-2024-03-19 ~ 2024-09-10 
+### 프로젝트 스킬
+spring (boot 3, security 6), hibernate 6, thymeleaf 3, vanlia js,  bootStrap 4
 
-프로젝트 스택  
-spring (boot3, security6) / jpa / thymeleaf / vanlia js / bootStrap  
+### 프로젝트로 얻은 경험
 
-
-### 어필
+보안
 <ul>
+  <li>csrf 토큰, csp (Content-Security-Policy) 적용</li>
   <li>
-    보안을 위해 스프링 시큐리티 사용
-    <ul>
-      <li>@EnableWebSecurity와 csrf 토큰 적용</li>
-      <li>
-        CSP 적용하고 카카오 지도 예외 등록<br>
-        → 지도 페이지만 unsafe-inline하기 위해 별도 필터체인 등록
-      </li>
-    </ul>
-  </li>
-  </li>
-  <li>
-    좋은 사용자 경혐을 위해 로그인 성공하면 reffer url로 redirect
-  </li>
-  <li>
-    1:N 연관 관계에서 N을 페치 조인한 경우, where절 N 사용 자제<br>
-    → 영속성 컨텍스트 충돌하기 때문
-  </li>
-  <li>
-    저장 로직은 중복 검사해도 동시에 요청 오면 예외 발생<br>
-     → 공통 예외 핸들러에 db unique 예외 추가
-  </li>
+    <a href="https://github.com/kimtaehyun304/poma/blob/e3c4a97d4deb1eb61b1e4075d94dff6c39c7e2a5/src/main/java/goinmul/sportsmanage/config/SecurityConfig.java#L47">
+      csp 이슈) 카카오 지도 css 누락 → 예외로 unsafe-inline</li>
+    </a>
+  <li>J세션 쿠키에 httpOnly, secure 적용</li>
+  <li>api 응답 xss 이스케이프 처리</li>
 </ul>
 
-### 개선 중
-개발 경험이 적을때라 코드가 클린하지 않아서 개선 중
+UI/UX (좋은 사용자 경험 제공)
 <ul>
-  <li>
-    <s>조건에 따라 ResponseEntity 또는 String(ModelAndView)를 반환하려면 메서드 반환형을 Object로 지정</s><br>
-    → 공통 예외처리하면 String 반환형 가능
-  </li>
-  <li>
-    <s>@RequestBody는 text/plain로 오면 자동 형변환 안해줌. text/plain 대신 applicaion/json 쓰자. </s><br>
-    <s>applicaion/json은 value만 있어도 JSON.stringfiy 가능</s><br>
-     → text 인데 json으로 보내는 건 부적절, 귀찮아도 key-value로 보내는 게 적절
-  </li>  
-    <li>
-      개발, 배포 프로젝트 따로 썼다가 합침<br>
-      → db 환경은 application.yml 과 application-prod.yml로 구분 <br>
-      → fetch api url은 window.location.origin 사용
-    </li>
+    <li>로그인 성공 → reffer url로 redirect</li>
+    <li>비 로그인 상태 응답 받음 → confirm 알림으로 로그인 페이지 이동 제안</li>
+    <li>뒤로가기를 고려하여, 로그인 페이지에서는 브라우저 캐시를 비활성화</li>
+    <li>ex) 로그인 상태임에도 뒤로가기로 로그인 페이지에 접근하면, UI상 비로그인 상태로 보일 수 있음</li>
+</ul>
+
+기타
+<ul>
+    <li>jpa 페치 조인 컬렉션 필드는 where절 자제 (이전 1차 캐시 결과와 다를 수 있기 때문)</li>
+    <li>저장 전에, 중복 검사해도 동시에 요청 오면 저장 될 수 있음 → unique 제약 조건 필요</li>
+    <li>java 8 LocalDate 직렬화하면 에러나서 objectMapper 커스텀해서 사용</li>
+    <li>대댓글 ajax 구현</li>
+    <li>클린 코드에 대한 지식이 적을 때 진행한 프로젝트라 개선 필요</li>
+    <li>ex) ResponseEntity 제너럴 타입, 오류 메시지를 예외에 담기 등</li>
+</ul>
+
+### 페이지
+
+사용자 페이지
+<ul>
+  <li>홈 (경기 종목 선택)</li>
+  <li>경기 조회·신청·수정·취소</li>
+  <li>구장 조회·예약·결제</li>
+  <li>고객 게시판 글 조회·등록 (비밀 글 처리 가능)</li>
+  <li>고객 게시판 댓글 조회·등록</li>
+  <li>멘토 리뷰 게시판 (댓글·별점 조회·등록)</li>
+  <li>팀 조회·생성</li>
+  <li>로그인·회원가입·계정 찾기</li>
+</ul>
+
+마이 페이지
+<ul>
+  <li>회원 정보 조회·수정</li>
+  <li>가입한 팀 수정</li>
+</ul>
+
+관리자 페이지
+<ul>
+  <li>유저 계정 권환 조회·수정</li>
+  <li>구장 등록·수정</li>
 </ul>
 
 ### UI/UX
 <h4 align="center">메인 페이지</h4>
 <p align="center">
-<img src="https://github.com/user-attachments/assets/0888f4c6-6062-4016-9dda-0f2f571e83b2" width="50%" height="50%"/>
+<img src="https://github.com/user-attachments/assets/0888f4c6-6062-4016-9dda-0f2f571e83b2" />
 </p>
 
 <h4 align="center">경기 매칭</h4>
 <p align="center">
-<img src="https://github.com/user-attachments/assets/c8e7dd30-e881-4868-b07d-129649a2ee76" width="50%" height="50%"/>
+<img src="https://github.com/user-attachments/assets/c8e7dd30-e881-4868-b07d-129649a2ee76" />
 </p>
 
 <h4 align="center">경기 매칭 디테일</h4>
 <p align="center">
-<img src="https://github.com/user-attachments/assets/043ce53f-9a90-4586-8822-2c6e6f0678ea" width="50%" height="50%"/>
+<img src="https://github.com/user-attachments/assets/043ce53f-9a90-4586-8822-2c6e6f0678ea" />
 </p>
 
 <h4 align="center">구장 예약</h4>
 <p align="center">
-<img src="https://github.com/user-attachments/assets/2c17759a-da31-4834-a7c0-3da393ad58f4" width="50%" height="50%"/>
+<img src="https://github.com/user-attachments/assets/2c17759a-da31-4834-a7c0-3da393ad58f4" />
 </p>
 
 <h4 align="center">고객 센터</h4>
 <p align="center">
-<img src="https://github.com/user-attachments/assets/771149c7-c421-4b11-aa97-5d54cf8e1e9d" width="50%" height="50%"/>
+<img src="https://github.com/user-attachments/assets/771149c7-c421-4b11-aa97-5d54cf8e1e9d" />
 </p>
-
-분실 계정 찾기, 마이페이지, 멘토 멘티, 관리자 페이지, 분실 계정 찾기 등..
-
