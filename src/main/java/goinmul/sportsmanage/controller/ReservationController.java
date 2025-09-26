@@ -43,7 +43,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReservationController {
 
-    private final SportsService sportsService;
     private final UserRepository userRepository;
     private final UserService userService;
     private final SocialMatchService socialMatchService;

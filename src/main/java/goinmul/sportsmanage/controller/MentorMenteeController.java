@@ -76,6 +76,8 @@ public class MentorMenteeController {
         return "mentorMentee/createMentorReviewForm";
     }
 
+    //-------------------- 아래부터는 ajax 용도 API --------------------
+
     @PostMapping("/reviews/form")
     @ResponseBody
     public Object createReview(@RequestBody @Valid ReviewForm reviewForm, BindingResult bindingResult, HttpSession session) {

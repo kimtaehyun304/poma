@@ -13,16 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class HomeController {
 
 
-    @GetMapping({"/", "/;{param}"})
+    @GetMapping({"/", "/{param}"})
     public String index(@PathVariable(required = false) String param) {
         return "mainPage";
     }
-
-    @GetMapping("/test")
-    public String test(HttpServletRequest session) {
-        return "mainPage";
-    }
-
-
 
 }

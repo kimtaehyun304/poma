@@ -32,7 +32,6 @@ public class AdminController {
     private final GroundService groundService;
     private final AdminService adminService;
 
-    //관리자 페이지
     @GetMapping("/admin")
     public String adminPage(Model model, HttpSession session) {
         User sessionUser = (User) session.getAttribute("user");
@@ -43,7 +42,6 @@ public class AdminController {
         return "admin/adminPage";
     }
 
-    //관리자 페이지 - 계정 권한 부여
     @GetMapping("/admins")
     public String authorityList(Model model,HttpSession session) {
         User sessionUser = (User) session.getAttribute("user");
@@ -57,7 +55,44 @@ public class AdminController {
         return "admin/userAuthorityList";
     }
 
-    //관리자 페이지 - 계정 권한 부여
+    @GetMapping("/grounds")
+    public String groundList(Model model, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("user");
+        if(sessionUser == null || sessionUser.getAuthority().equals(Authority.USER)){
+            model.addAttribute("message", "관리자만 접근할 수 있어요");
+            return "alertPage";
+        }
+        List<Ground> grounds = groundRepository.findAllOrderByCreatedAtAsc();
+        model.addAttribute("grounds", grounds);
+        return "admin/groundList";
+    }
+
+    @GetMapping("/ground")
+    public String groundFrom(Model model, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("user");
+        if(sessionUser == null || sessionUser.getAuthority().equals(Authority.USER)){
+            model.addAttribute("message", "관리자만 접근할 수 있어요");
+            return "alertPage";
+        }
+        return "admin/createGroundForm";
+    }
+
+    @GetMapping("/ground/{id}")
+    public String updateGroundFrom(@PathVariable Long id, Model model, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("user");
+        if(sessionUser == null || sessionUser.getAuthority().equals(Authority.USER)){
+            model.addAttribute("message", "관리자만 접근할 수 있어요");
+            return "alertPage";
+        }
+
+        Ground ground = groundRepository.findOne(id);
+        model.addAttribute("ground", ground);
+
+        return "admin/updateGroundForm";
+    }
+
+    //--- 아래부터는 ajax 용도 API
+
     @PostMapping("/admins")
     @ResponseBody
     public ResponseEntity<String> grantAuthority(@RequestBody AuthorityForm authorityForm, HttpSession session) {
@@ -77,31 +112,6 @@ public class AdminController {
 
     }
 
-    //관리자 페이지 - 구장 관리
-    @GetMapping("/grounds")
-    public String groundList(Model model, HttpSession session) {
-        User sessionUser = (User) session.getAttribute("user");
-        if(sessionUser == null || sessionUser.getAuthority().equals(Authority.USER)){
-            model.addAttribute("message", "관리자만 접근할 수 있어요");
-            return "alertPage";
-        }
-        List<Ground> grounds = groundRepository.findAllOrderByCreatedAtAsc();
-        model.addAttribute("grounds", grounds);
-        return "admin/groundList";
-    }
-
-    //관리자 페이지 - 구장 생성
-    @GetMapping("/ground")
-    public String groundFrom(Model model, HttpSession session) {
-        User sessionUser = (User) session.getAttribute("user");
-        if(sessionUser == null || sessionUser.getAuthority().equals(Authority.USER)){
-            model.addAttribute("message", "관리자만 접근할 수 있어요");
-            return "alertPage";
-        }
-        return "admin/createGroundForm";
-    }
-
-    //관리자 페이지 - 구장 생성
     @PostMapping("/ground")
     @ResponseBody
     public ResponseEntity<String> createGround(@Valid @RequestBody GroundForm groundForm, BindingResult bindingResult, HttpSession session) {
@@ -127,22 +137,6 @@ public class AdminController {
             return new ResponseEntity<>("구장 추가 실패! 위치+이름 데이터가 이미 존재합니다", HttpStatus.CONFLICT);
     }
 
-    //관리자 페이지 - 구장 수정
-    @GetMapping("/ground/{id}")
-    public String updateGroundFrom(@PathVariable Long id, Model model, HttpSession session) {
-        User sessionUser = (User) session.getAttribute("user");
-        if(sessionUser == null || sessionUser.getAuthority().equals(Authority.USER)){
-            model.addAttribute("message", "관리자만 접근할 수 있어요");
-            return "alertPage";
-        }
-
-        Ground ground = groundRepository.findOne(id);
-        model.addAttribute("ground", ground);
-
-        return "admin/updateGroundForm";
-    }
-
-    //관리자 페이지 - 구장 수정
     @PostMapping("/ground/{id}")
     @ResponseBody
     public ResponseEntity<String> updateGround(@Valid @RequestBody GroundForm groundForm, BindingResult bindingResult, HttpSession session) {

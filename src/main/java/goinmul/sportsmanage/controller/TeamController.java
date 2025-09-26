@@ -34,16 +34,6 @@ public class TeamController {
         return "team/createTeamForm";
     }
 
-    @PostMapping("/team")
-    @ResponseBody
-    public ResponseEntity<String> createTeam(@RequestBody String name) {
-        Team team = Team.createTeam(name);
-        boolean result = teamService.saveTeam(team);
-
-        if(result) return new ResponseEntity<>("팀 생성 완료", HttpStatus.OK);
-        else return new ResponseEntity<>("이미 사용중인 팀 이름입니다", HttpStatus.CONFLICT);
-    }
-
     @GetMapping("/teams")
     public String teamList(@RequestParam(required = false, defaultValue = "1") int page,
                            @RequestParam(required = false) String keyword, Model model) {
@@ -72,5 +62,15 @@ public class TeamController {
         return "redirect:/user/myPage";
     }
 
+    //-------------------- 아래부터는 ajax 용도 API --------------------
 
+    @PostMapping("/team")
+    @ResponseBody
+    public ResponseEntity<String> createTeam(@RequestBody String name) {
+        Team team = Team.createTeam(name);
+        boolean result = teamService.saveTeam(team);
+
+        if(result) return new ResponseEntity<>("팀 생성 완료", HttpStatus.OK);
+        else return new ResponseEntity<>("이미 사용중인 팀 이름입니다", HttpStatus.CONFLICT);
+    }
 }

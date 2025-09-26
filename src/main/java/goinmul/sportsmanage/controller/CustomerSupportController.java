@@ -39,34 +39,6 @@ public class CustomerSupportController {
         return "customerSupport/createCustomerPostForm";
     }
 
-    //문의 글 저장
-    @PostMapping("/customer")
-    @ResponseBody
-    public ResponseEntity<String> createCustomerPost(@Valid @RequestBody CustomerPostForm customerPostForm, BindingResult bindingResult, HttpSession session) {
-
-        User sessionUser = (User) session.getAttribute("user");
-
-        if (sessionUser == null)
-            return new ResponseEntity<>("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
-
-
-        if(bindingResult.hasErrors()) {
-            StringBuilder message = new StringBuilder();
-            for (ObjectError error : bindingResult.getAllErrors()) {
-                message.append(error.getDefaultMessage()).append("\n");
-            }
-            message.deleteCharAt(message.length()-1);
-            return new ResponseEntity<>(message.toString(), HttpStatus.CONFLICT);
-        }
-
-        CustomerSupport customerSupport = CustomerSupport.createPost(sessionUser, customerPostForm.getTitle(), customerPostForm.getContent(), customerPostForm.isSecret());
-
-        // 포스트 저장
-        customerSupportService.saveCustomerPost(customerSupport);
-
-        return new ResponseEntity<>("문의 작성 완료!", HttpStatus.CREATED);
-    }
-
     //문의 글 작성 완료 페이지
     @GetMapping("/customer/ok")
     public String customerPostOk() {
@@ -108,6 +80,36 @@ public class CustomerSupportController {
             return new ResponseEntity<>("비밀 글입니다", HttpStatus.CONFLICT);
             //return new ResponseEntity<>("<script>alert('비밀 글입니다'); history.back()</script>", HttpStatus.CONFLICT);
         }
+    }
+
+    //--- 아래부터는 ajax 용도 API
+
+    //문의 글 저장
+    @PostMapping("/customer")
+    @ResponseBody
+    public ResponseEntity<String> createCustomerPost(@Valid @RequestBody CustomerPostForm customerPostForm, BindingResult bindingResult, HttpSession session) {
+
+        User sessionUser = (User) session.getAttribute("user");
+
+        if (sessionUser == null)
+            return new ResponseEntity<>("로그인 해주세요!", HttpStatus.UNAUTHORIZED);
+
+
+        if(bindingResult.hasErrors()) {
+            StringBuilder message = new StringBuilder();
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                message.append(error.getDefaultMessage()).append("\n");
+            }
+            message.deleteCharAt(message.length()-1);
+            return new ResponseEntity<>(message.toString(), HttpStatus.CONFLICT);
+        }
+
+        CustomerSupport customerSupport = CustomerSupport.createPost(sessionUser, customerPostForm.getTitle(), customerPostForm.getContent(), customerPostForm.isSecret());
+
+        // 포스트 저장
+        customerSupportService.saveCustomerPost(customerSupport);
+
+        return new ResponseEntity<>("문의 작성 완료!", HttpStatus.CREATED);
     }
 
     //댓글 저장

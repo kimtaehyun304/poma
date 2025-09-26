@@ -47,19 +47,6 @@ public class UsersController {
         return "user/signup";
     }
 
-    //USER 테이블 authority 컬럼 기본값 'USER'
-    @PostMapping("/user/signup")
-    @ResponseBody
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        user.changePassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        boolean result = userService.saveUser(user);
-
-        if (result)
-            return new ResponseEntity<>("회원가입 성공", HttpStatus.OK);
-        else
-            return new ResponseEntity<>("회원가입 실패 - 이미 사용중인 아이디거나 사용중인 이름 입니다", HttpStatus.CONFLICT);
-    }
-
     @GetMapping("/user/signin")
     public String loginForm(HttpServletResponse response) {
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
@@ -75,24 +62,6 @@ public class UsersController {
 
         return "user/signin";
 
-    }
-
-    @PostMapping("/user/signin")
-    @ResponseBody
-    public ResponseEntity<String> login(@RequestBody UserForm userForm, HttpSession session) {
-        User user = userRepository.findWithTeamByLoginId(userForm.getLoginId());
-        if(userForm.getLoginId().equals("guest") || userForm.getLoginId().equals("guest2")) {
-            session.setAttribute("user", user);
-            //jwt 발급
-            return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
-        }else {
-            if (user != null && bCryptPasswordEncoder.matches(userForm.getPassword(), user.getPassword())) {
-                session.setAttribute("user", user);
-                return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
-            }
-        }
-
-        return new ResponseEntity<>("로그인 실패", HttpStatus.CONFLICT);
     }
 
     @PostMapping("/user/logout")
@@ -114,6 +83,11 @@ public class UsersController {
             model.addAttribute("user", user);
         }
         return "user/myPage";
+    }
+
+    @GetMapping("/user/findAccount")
+    public String findAccountForm() {
+        return "user/findAccount";
     }
 
     //매치 참가 이력 조회
@@ -159,7 +133,8 @@ public class UsersController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(json)
                 .retrieve()
-                .body(new ParameterizedTypeReference<>() {});
+                .body(new ParameterizedTypeReference<>() {
+                });
 
         if (accessTokenResponse == null)
             return new ResponseEntity<>("결제 실패!", HttpStatus.CONFLICT);
@@ -171,7 +146,8 @@ public class UsersController {
                 .uri("https://api.iamport.kr/payments/{imp_uid}", imp_uid)
                 .header("Authorization", accessToken)
                 .retrieve()
-                .body(new ParameterizedTypeReference<>() {});
+                .body(new ParameterizedTypeReference<>() {
+                });
 
         if (paymentResponse == null)
             return new ResponseEntity<>("결제 실패!", HttpStatus.CONFLICT);
@@ -182,7 +158,41 @@ public class UsersController {
         userService.chargeMoney(sessionUser, amount);
         sessionUser.plusMoney(amount);
 
-        return "redirect:"+url;
+        return "redirect:" + url;
+    }
+
+
+    //-------------------- 아래부터는 ajax 용도 API --------------------
+
+    //USER 테이블 authority 컬럼 기본값 'USER'
+    @PostMapping("/user/signup")
+    @ResponseBody
+    public ResponseEntity<String> createUser(@RequestBody User user) {
+        user.changePassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        boolean result = userService.saveUser(user);
+
+        if (result)
+            return new ResponseEntity<>("회원가입 성공", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("회원가입 실패 - 이미 사용중인 아이디거나 사용중인 이름 입니다", HttpStatus.CONFLICT);
+    }
+
+    @PostMapping("/user/signin")
+    @ResponseBody
+    public ResponseEntity<String> login(@RequestBody UserForm userForm, HttpSession session) {
+        User user = userRepository.findWithTeamByLoginId(userForm.getLoginId());
+        if (userForm.getLoginId().equals("guest") || userForm.getLoginId().equals("guest2")) {
+            session.setAttribute("user", user);
+            //jwt 발급
+            return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
+        } else {
+            if (user != null && bCryptPasswordEncoder.matches(userForm.getPassword(), user.getPassword())) {
+                session.setAttribute("user", user);
+                return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>("로그인 실패", HttpStatus.CONFLICT);
     }
 
     @PostMapping("/payment")
@@ -202,7 +212,8 @@ public class UsersController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(json)
                 .retrieve()
-                .body(new ParameterizedTypeReference<>() {});
+                .body(new ParameterizedTypeReference<>() {
+                });
 
         if (accessTokenResponse == null)
             return new ResponseEntity<>("결제 실패!", HttpStatus.CONFLICT);
@@ -214,7 +225,8 @@ public class UsersController {
                 .uri("https://api.iamport.kr/payments/{imp_uid}", imp_uid)
                 .header("Authorization", accessToken)
                 .retrieve()
-                .body(new ParameterizedTypeReference<>() {});
+                .body(new ParameterizedTypeReference<>() {
+                });
 
         if (paymentResponse == null)
             return new ResponseEntity<>("결제 실패!", HttpStatus.CONFLICT);
@@ -229,11 +241,6 @@ public class UsersController {
         return new ResponseEntity<>("결제 및 충전 완료!", HttpStatus.CREATED);
     }
 
-    @GetMapping("/user/findAccount")
-    public String findAccountForm() {
-        return "user/findAccount";
-    }
-
     @PostMapping("/user/findAccount")
     @ResponseBody
     public ResponseEntity<String> findAccount(@RequestBody String email) {
@@ -244,7 +251,6 @@ public class UsersController {
             return new ResponseEntity<>("메일로 인증 정보를 담은 메일이 발송되었습니다. 메일이 보이지 않으면 스팸보관함을 확인하시기 바랍니다", HttpStatus.OK);
         else
             return new ResponseEntity<>("해당 이메일로 가입한 계정이 없습니다", HttpStatus.CONFLICT);
-
     }
 
 }

@@ -45,9 +45,7 @@ public class MatchController {
     private final SocialUserService socialUserService;
     private final SocialMatchService socialMatchService;
     private final SocialMatchRepository socialMatchRepository;
-    private final TeamUserRepository teamUserRepository;
     private final TeamUserService teamUserService;
-    private final MercenaryMatchUserRepository mercenaryMatchUserRepository;
     private final MercenaryUserService mercenaryUserService;
     private final TeamMatchRepository teamMatchRepository;
     private final TeamMatchService teamMatchService;
@@ -77,6 +75,176 @@ public class MatchController {
 
         return "match/socialMatch";
     }
+
+    //팀 매치 조회
+    @GetMapping("/teamMatch/{sports}")
+    public String teamMatchList(@PathVariable Sports sports, Model model, HttpSession session,
+                                @RequestParam(required = false, defaultValue = "all") String location,
+                                @RequestParam(required = false) LocalDate date,
+                                @RequestParam(required = false) Gender gender) {
+
+        if (date == null) date = LocalDate.now();
+        User sessionUser = (User) session.getAttribute("user");
+
+        //select 쿼리 두번으로 나눠서 만듬
+        List<TeamMatch> teamMatches = teamMatchRepository.findAllWithTeamUserAndTeamReservationAndGroundByDateAndLocationAndGenderAndSports(date, location, gender, sports);
+        List<TeamMatchDto> teamMatchesDto = teamMatches.stream().map(t -> new TeamMatchDto(t, sessionUser)).collect(Collectors.toList());
+
+        model.addAttribute("teamMatches", teamMatchesDto);
+        model.addAttribute("location", location);
+        model.addAttribute("date", date);
+        model.addAttribute("gender", gender);
+        return "match/teamMatch";
+    }
+
+    //팀 매치 멤버 선택 및 조회
+    @GetMapping("/teamMatch/{teamMatchId}/user/new")
+    public Object teamUserList(@PathVariable Long teamMatchId, HttpSession session, Model model) {
+        User sessionUser = (User) session.getAttribute("user");
+
+        if (sessionUser == null)
+            return new ResponseEntity<>("로그인 해주세요", HttpStatus.UNAUTHORIZED);
+
+        if (sessionUser.getTeam() == null)
+            return new ResponseEntity<>("팀에 가입해주세요", HttpStatus.CONFLICT);
+
+        TeamMatch teamMatch = teamMatchRepository.findWithTeamUserByTeamMatchId(teamMatchId);
+        TeamMatchDto teamMatchDto = new TeamMatchDto(teamMatch);
+
+        if(teamMatchDto.getTeams().contains(sessionUser.getTeam().getName()))
+            return new ResponseEntity<>("이미 팀이 신청한 경기입니다", HttpStatus.CONFLICT);
+
+        if (teamMatch.getMaxSize() == teamMatchDto.getUserIdList().size())
+            return new ResponseEntity<>("마감된 매치입니다", HttpStatus.CONFLICT);
+
+        //모집 성별과 맞는 멤버가 부족한 경우 && 팀 멤버가 부족한 경우: 사용자가 홈페이지 구경할 수 있게 하기 위해 if처리 안했습니다.
+
+        List<User> users = userRepository.findAllByTeamIdAndGenderAndUserIdNotIn(sessionUser.getTeam().getId(), teamMatch.getGender(), teamMatchDto.getUserIdList());
+        List<UserDto> usersDto = users.stream().map(u -> new UserDto(u)).collect(Collectors.toList());
+
+        model.addAttribute("teamMatch", teamMatchDto);
+        model.addAttribute("users", usersDto);
+        return "match/addTeamMemberForm";
+    }
+
+    //팀 매치 선발 멤버 조회 및 수정
+    //수정이 목적이라 edit 사용 (다른 이유는 멤버 조회만 하는 기능이 추가될 수 있음)
+    @GetMapping("/teamMatch/{teamMatchId}/user/edit")
+    public Object editTeamUsersForm(@PathVariable Long teamMatchId, HttpSession session, Model model) {
+        User sessionUser = (User) session.getAttribute("user");
+
+        if (sessionUser == null)
+            return new ResponseEntity<>("로그인 해주세요", HttpStatus.UNAUTHORIZED);
+
+        if (sessionUser.getTeam() == null)
+            return new ResponseEntity<>("팀에 가입해주세요", HttpStatus.CONFLICT);
+
+        TeamMatch teamMatch = teamMatchRepository.findWithTeamUserByTeamMatchIdAndTeamId(teamMatchId, sessionUser.getTeam().getId());
+        TeamMatchDto teamMatchDto = new TeamMatchDto(teamMatch);
+        if (!teamMatchDto.getTeams().contains(sessionUser.getTeam().getName()))
+            return new ResponseEntity<>("팀이 매치에 안 참가했습니다.", HttpStatus.CONFLICT);
+
+        List<User> users = userRepository.findByTeamIdAndGender(sessionUser.getTeam().getId(), teamMatch.getGender());
+        List<UserDto> usersDto = users.stream().map(u -> new UserDto(u)).collect(Collectors.toList());
+        model.addAttribute("teamMatch", teamMatchDto);
+        model.addAttribute("users", usersDto);
+        return "match/editTeamMemberForm";
+    }
+
+    //용병 매치 조회
+    @GetMapping("/mercenaryMatch/{sports}")
+    public String mercenaryMatchList(@PathVariable Sports sports, Model model, HttpSession session,
+                                     @RequestParam(required = false, defaultValue = "all") String location,
+                                     @RequestParam(required = false) LocalDate date,
+                                     @RequestParam(required = false) Gender gender) {
+
+        User sessionUser = (User) session.getAttribute("user");
+        if (date == null) date = LocalDate.now();
+
+        List<MercenaryMatch> mercenaryMatches = mercenaryMatchRepository.findAllWithMercenaryMatchUserAndTeamAndReservationAndGroundByDateAndLocationAndGenderAndSports(date, location, gender, sports);
+        List<MercenaryMatchDto> mercenaryMatchesDto = mercenaryMatches.stream().map(m -> new MercenaryMatchDto(m, sessionUser)).toList();
+
+        model.addAttribute("mercenaryMatches", mercenaryMatchesDto);
+        model.addAttribute("location", location);
+        model.addAttribute("date", date);
+        model.addAttribute("gender", gender);
+        return "match/mercenaryMatch";
+    }
+
+    //용병 매치 선발 멤버 선택 및 조회
+    @GetMapping("/mercenaryMatch/{mercenaryMatchId}/user/new")
+    public Object choiceMercenaryUserList(@PathVariable Long mercenaryMatchId, HttpSession session, Model model) {
+        User sessionUser = (User) session.getAttribute("user");
+
+        MercenaryMatch mercenaryMatch = mercenaryMatchRepository.findWithMercenaryMatchUserWithTeamByMercenaryMatchId(mercenaryMatchId);
+        MercenaryMatchDto mercenaryMatchDto = new MercenaryMatchDto(mercenaryMatch);
+
+        if (sessionUser == null)
+            return new ResponseEntity<>("로그인 해주세요", HttpStatus.UNAUTHORIZED);
+
+        if (sessionUser.getTeam() == null)
+            return new ResponseEntity<>("팀에 가입해주세요", HttpStatus.CONFLICT);
+
+        List<Long> teamIdList = mercenaryMatchDto.getTeams().stream().map(t -> t.getId()).toList();
+        if(teamIdList.contains(sessionUser.getTeam().getId()))
+            return new ResponseEntity<>("이미 팀이 경기 신청했어요", HttpStatus.CONFLICT);
+
+        if (mercenaryMatchDto.getMaxSize() == mercenaryMatchDto.getUserIdList().size())
+            return new ResponseEntity<>("마감된 매치입니다", HttpStatus.CONFLICT);
+
+        //상대 팀 용병 구하기 (상대 팀에 용병으로 참가한 원래 우리팀 멤버 찾기 위함)
+        List<Long> userIdList = mercenaryMatch.getMercenaryMatchUsers().stream().filter(u -> !u.getTeam().getId().equals(sessionUser.getTeam().getId()))
+                .filter(u -> u.getStatus().equals(UserStatus.MERCENARY)).map(u -> u.getUser().getId()).toList();
+
+        //상대 팀에 용병으로 참가한 원래 우리팀 멤버는 제외하고 조회한다.
+        List<User> users = userRepository.findAllByTeamIdAndGenderAndUserIdNotIn(sessionUser.getTeam().getId(), mercenaryMatchDto.getGender(), userIdList);
+
+        //HttpStatus 200 자동으로 됨
+        model.addAttribute("users", users);
+        model.addAttribute("mercenaryMatch", mercenaryMatchDto);
+        return "match/addMercenaryMemberForm";
+    }
+
+    //용병 매치 선발 멤버 조회 및 수정
+    @GetMapping("/mercenaryMatch/{mercenaryMatchId}/user/edit")
+    public Object editMercenaryUsersForm(@PathVariable Long mercenaryMatchId, HttpSession session, Model model) {
+        User sessionUser = (User) session.getAttribute("user");
+
+        if (sessionUser == null)
+            return new ResponseEntity<>("로그인 해주세요", HttpStatus.UNAUTHORIZED);
+
+        if (sessionUser.getTeam() == null)
+            return new ResponseEntity<>("팀에 가입해주세요", HttpStatus.CONFLICT);
+
+        MercenaryMatch mercenaryMatch = mercenaryMatchRepository.findWithMercenaryMatchUserWithTeamByMercenaryMatchId(mercenaryMatchId);
+
+        //TeamId가 하나라서 반복문이 필요없지만, 한번 반복한다해서 성능이 나빠지는 건 아니니까 재사용했습니다.
+        MercenaryMatchDto mercenaryMatchDto = new MercenaryMatchDto(mercenaryMatch);
+
+        if(mercenaryMatchDto.getTeams().isEmpty())
+            return new ResponseEntity<>("팀이 매치에 안 참가했습니다.", HttpStatus.CONFLICT);
+
+        //상대 팀 용병 구하기 (상대 팀에 용병으로 참가한 원래 우리팀 멤버 찾기 위함)
+        List<Long> userIdList = mercenaryMatch.getMercenaryMatchUsers().stream().filter(u -> !u.getTeam().getId().equals(sessionUser.getTeam().getId()))
+                .filter(u -> u.getStatus().equals(UserStatus.MERCENARY)).map(u -> u.getUser().getId()).toList();
+
+        //우리팀 멤버 다 보내고 매치에 참가한 멤버는 체크박스 select 표시
+        //상대 팀에 용병으로 참가한 원래 우리팀 멤버는 제외하고 조회한다.
+        List<User> users = userRepository.findAllByTeamIdAndGenderAndUserIdNotIn(sessionUser.getTeam().getId(), mercenaryMatchDto.getGender(), userIdList);
+        List<UserDto> membersDto = users.stream().map(u -> new UserDto(u)).collect(Collectors.toList());
+        List<Long> mercenaryIdList = mercenaryMatchDto.getTeams().stream().filter(t -> t.getId().equals(sessionUser.getTeam().getId())).findFirst().get().getMercenaryIdList();
+
+        //List<User> users = userRepository.findAllByGenderAndUserIdIn(sessionUser.getTeam().getId(), mercenaryMatchDto.getGender(), mercenaryMatchDto.getUserIdList());
+        //List<UserDto> usersDto = users.stream().map(u -> new UserDto(u)).collect(Collectors.toList());
+        List<User> mercenaries = userRepository.findAllByUserIdIn(mercenaryIdList);
+        model.addAttribute("mercenaryMatch", mercenaryMatchDto);
+        model.addAttribute("members", membersDto);
+        model.addAttribute("mercenaries", mercenaries);
+        return "match/editMercenaryMemberForm";
+    }
+
+
+    //-------------------- 아래부터는 ajax 용도 API --------------------
 
     //소셜 매치 참가 - 매치 생성은 ReservationController에서 예약 성공하면 매치를 함께 생성합니다.
     @PostMapping("/socialMatch/{sports}")
@@ -134,58 +302,6 @@ public class MatchController {
         return new ResponseEntity<>("신청 취소 완료!", HttpStatus.OK);
     }
 
-    //팀 매치 조회
-    @GetMapping("/teamMatch/{sports}")
-    public String teamMatchList(@PathVariable Sports sports, Model model, HttpSession session,
-                                @RequestParam(required = false, defaultValue = "all") String location,
-                                @RequestParam(required = false) LocalDate date,
-                                @RequestParam(required = false) Gender gender) {
-
-        if (date == null) date = LocalDate.now();
-        User sessionUser = (User) session.getAttribute("user");
-
-        //select 쿼리 두번으로 나눠서 만듬
-        List<TeamMatch> teamMatches = teamMatchRepository.findAllWithTeamUserAndTeamReservationAndGroundByDateAndLocationAndGenderAndSports(date, location, gender, sports);
-        List<TeamMatchDto> teamMatchesDto = teamMatches.stream().map(t -> new TeamMatchDto(t, sessionUser)).collect(Collectors.toList());
-
-        model.addAttribute("teamMatches", teamMatchesDto);
-        model.addAttribute("location", location);
-        model.addAttribute("date", date);
-        model.addAttribute("gender", gender);
-        return "match/teamMatch";
-    }
-
-    //팀 매치 멤버 선택 및 조회
-    @GetMapping("/teamMatch/{teamMatchId}/user/new")
-    public Object teamUserList(@PathVariable Long teamMatchId, HttpSession session, Model model) {
-        User sessionUser = (User) session.getAttribute("user");
-
-        if (sessionUser == null)
-            return new ResponseEntity<>("로그인 해주세요", HttpStatus.UNAUTHORIZED);
-
-        if (sessionUser.getTeam() == null)
-            return new ResponseEntity<>("팀에 가입해주세요", HttpStatus.CONFLICT);
-
-        TeamMatch teamMatch = teamMatchRepository.findWithTeamUserByTeamMatchId(teamMatchId);
-        TeamMatchDto teamMatchDto = new TeamMatchDto(teamMatch);
-
-        if(teamMatchDto.getTeams().contains(sessionUser.getTeam().getName()))
-            return new ResponseEntity<>("이미 팀이 신청한 경기입니다", HttpStatus.CONFLICT);
-
-        if (teamMatch.getMaxSize() == teamMatchDto.getUserIdList().size())
-            return new ResponseEntity<>("마감된 매치입니다", HttpStatus.CONFLICT);
-
-        //모집 성별과 맞는 멤버가 부족한 경우 && 팀 멤버가 부족한 경우: 사용자가 홈페이지 구경할 수 있게 하기 위해 if처리 안했습니다.
-
-        List<User> users = userRepository.findAllByTeamIdAndGenderAndUserIdNotIn(sessionUser.getTeam().getId(), teamMatch.getGender(), teamMatchDto.getUserIdList());
-        List<UserDto> usersDto = users.stream().map(u -> new UserDto(u)).collect(Collectors.toList());
-
-        model.addAttribute("teamMatch", teamMatchDto);
-        model.addAttribute("users", usersDto);
-        return "match/addTeamMemberForm";
-
-    }
-
     //팀 매치 멤버 선택 저장
     @PostMapping("/teamMatch/{teamMatchId}/user/new")
     @ResponseBody
@@ -217,30 +333,6 @@ public class MatchController {
         }
         teamUserService.saveTeamUsers(teamUsers);
         return new ResponseEntity<>("팀 매치 참가 완료!", HttpStatus.CREATED);
-    }
-
-    //팀 매치 선발 멤버 조회 및 수정
-    //수정이 목적이라 edit 사용 (다른 이유는 멤버 조회만 하는 기능이 추가될 수 있음)
-    @GetMapping("/teamMatch/{teamMatchId}/user/edit")
-    public Object editTeamUsersForm(@PathVariable Long teamMatchId, HttpSession session, Model model) {
-        User sessionUser = (User) session.getAttribute("user");
-
-        if (sessionUser == null)
-            return new ResponseEntity<>("로그인 해주세요", HttpStatus.UNAUTHORIZED);
-
-        if (sessionUser.getTeam() == null)
-            return new ResponseEntity<>("팀에 가입해주세요", HttpStatus.CONFLICT);
-
-        TeamMatch teamMatch = teamMatchRepository.findWithTeamUserByTeamMatchIdAndTeamId(teamMatchId, sessionUser.getTeam().getId());
-        TeamMatchDto teamMatchDto = new TeamMatchDto(teamMatch);
-        if (!teamMatchDto.getTeams().contains(sessionUser.getTeam().getName()))
-            return new ResponseEntity<>("팀이 매치에 안 참가했습니다.", HttpStatus.CONFLICT);
-
-        List<User> users = userRepository.findByTeamIdAndGender(sessionUser.getTeam().getId(), teamMatch.getGender());
-        List<UserDto> usersDto = users.stream().map(u -> new UserDto(u)).collect(Collectors.toList());
-        model.addAttribute("teamMatch", teamMatchDto);
-        model.addAttribute("users", usersDto);
-        return "match/editTeamMemberForm";
     }
 
     //팀 매치 선발 멤버 수정 반영 (edit이 수정을 의미하기 때문에, put메서드 안 썼습니다)
@@ -307,60 +399,6 @@ public class MatchController {
         return new ResponseEntity<>("팀 매치 일괄 취소 완료!", HttpStatus.OK);
     }
 
-    //용병 매치 조회
-    @GetMapping("/mercenaryMatch/{sports}")
-    public String mercenaryMatchList(@PathVariable Sports sports, Model model, HttpSession session,
-                                     @RequestParam(required = false, defaultValue = "all") String location,
-                                     @RequestParam(required = false) LocalDate date,
-                                     @RequestParam(required = false) Gender gender) {
-
-        User sessionUser = (User) session.getAttribute("user");
-        if (date == null) date = LocalDate.now();
-
-        List<MercenaryMatch> mercenaryMatches = mercenaryMatchRepository.findAllWithMercenaryMatchUserAndTeamAndReservationAndGroundByDateAndLocationAndGenderAndSports(date, location, gender, sports);
-        List<MercenaryMatchDto> mercenaryMatchesDto = mercenaryMatches.stream().map(m -> new MercenaryMatchDto(m, sessionUser)).toList();
-
-        model.addAttribute("mercenaryMatches", mercenaryMatchesDto);
-        model.addAttribute("location", location);
-        model.addAttribute("date", date);
-        model.addAttribute("gender", gender);
-        return "match/mercenaryMatch";
-    }
-
-    //용병 매치 선발 멤버 선택 및 조회
-    @GetMapping("/mercenaryMatch/{mercenaryMatchId}/user/new")
-    public Object choiceMercenaryUserList(@PathVariable Long mercenaryMatchId, HttpSession session, Model model) {
-        User sessionUser = (User) session.getAttribute("user");
-
-        MercenaryMatch mercenaryMatch = mercenaryMatchRepository.findWithMercenaryMatchUserWithTeamByMercenaryMatchId(mercenaryMatchId);
-        MercenaryMatchDto mercenaryMatchDto = new MercenaryMatchDto(mercenaryMatch);
-
-        if (sessionUser == null)
-            return new ResponseEntity<>("로그인 해주세요", HttpStatus.UNAUTHORIZED);
-
-        if (sessionUser.getTeam() == null)
-            return new ResponseEntity<>("팀에 가입해주세요", HttpStatus.CONFLICT);
-
-        List<Long> teamIdList = mercenaryMatchDto.getTeams().stream().map(t -> t.getId()).toList();
-        if(teamIdList.contains(sessionUser.getTeam().getId()))
-            return new ResponseEntity<>("이미 팀이 경기 신청했어요", HttpStatus.CONFLICT);
-
-        if (mercenaryMatchDto.getMaxSize() == mercenaryMatchDto.getUserIdList().size())
-            return new ResponseEntity<>("마감된 매치입니다", HttpStatus.CONFLICT);
-
-        //상대 팀 용병 구하기 (상대 팀에 용병으로 참가한 원래 우리팀 멤버 찾기 위함)
-        List<Long> userIdList = mercenaryMatch.getMercenaryMatchUsers().stream().filter(u -> !u.getTeam().getId().equals(sessionUser.getTeam().getId()))
-                .filter(u -> u.getStatus().equals(UserStatus.MERCENARY)).map(u -> u.getUser().getId()).toList();
-
-        //상대 팀에 용병으로 참가한 원래 우리팀 멤버는 제외하고 조회한다.
-        List<User> users = userRepository.findAllByTeamIdAndGenderAndUserIdNotIn(sessionUser.getTeam().getId(), mercenaryMatchDto.getGender(), userIdList);
-
-        //HttpStatus 200 자동으로 됨
-        model.addAttribute("users", users);
-        model.addAttribute("mercenaryMatch", mercenaryMatchDto);
-        return "match/addMercenaryMemberForm";
-    }
-
     //용병 매치 선발 멤버 선택 저장
     @PostMapping("/mercenaryMatch/{mercenaryMatchId}/user/new")
     @ResponseBody
@@ -392,44 +430,6 @@ public class MatchController {
         //성능을 위해, 중복 검증은 공통처리 로직으로 처리했습니다. (POSTMAN을 통해 직접 보내지 않고서야 중복 데이터가 올리 없기 때문에)
         mercenaryUserService.saveMercenaryMatchUsers(mercenaryUsers);
         return new ResponseEntity<>("용병 매치 참가 완료!", HttpStatus.CREATED);
-    }
-
-    //용병 매치 선발 멤버 조회 및 수정
-    @GetMapping("/mercenaryMatch/{mercenaryMatchId}/user/edit")
-    public Object editMercenaryUsersForm(@PathVariable Long mercenaryMatchId, HttpSession session, Model model) {
-        User sessionUser = (User) session.getAttribute("user");
-
-        if (sessionUser == null)
-            return new ResponseEntity<>("로그인 해주세요", HttpStatus.UNAUTHORIZED);
-
-        if (sessionUser.getTeam() == null)
-            return new ResponseEntity<>("팀에 가입해주세요", HttpStatus.CONFLICT);
-
-        MercenaryMatch mercenaryMatch = mercenaryMatchRepository.findWithMercenaryMatchUserWithTeamByMercenaryMatchId(mercenaryMatchId);
-        
-        //TeamId가 하나라서 반복문이 필요없지만, 한번 반복한다해서 성능이 나빠지는 건 아니니까 재사용했습니다.
-        MercenaryMatchDto mercenaryMatchDto = new MercenaryMatchDto(mercenaryMatch);
-
-        if(mercenaryMatchDto.getTeams().isEmpty())
-            return new ResponseEntity<>("팀이 매치에 안 참가했습니다.", HttpStatus.CONFLICT);
-
-        //상대 팀 용병 구하기 (상대 팀에 용병으로 참가한 원래 우리팀 멤버 찾기 위함)
-        List<Long> userIdList = mercenaryMatch.getMercenaryMatchUsers().stream().filter(u -> !u.getTeam().getId().equals(sessionUser.getTeam().getId()))
-                .filter(u -> u.getStatus().equals(UserStatus.MERCENARY)).map(u -> u.getUser().getId()).toList();
-
-        //우리팀 멤버 다 보내고 매치에 참가한 멤버는 체크박스 select 표시
-        //상대 팀에 용병으로 참가한 원래 우리팀 멤버는 제외하고 조회한다.
-        List<User> users = userRepository.findAllByTeamIdAndGenderAndUserIdNotIn(sessionUser.getTeam().getId(), mercenaryMatchDto.getGender(), userIdList);
-        List<UserDto> membersDto = users.stream().map(u -> new UserDto(u)).collect(Collectors.toList());
-        List<Long> mercenaryIdList = mercenaryMatchDto.getTeams().stream().filter(t -> t.getId().equals(sessionUser.getTeam().getId())).findFirst().get().getMercenaryIdList();
-
-        //List<User> users = userRepository.findAllByGenderAndUserIdIn(sessionUser.getTeam().getId(), mercenaryMatchDto.getGender(), mercenaryMatchDto.getUserIdList());
-        //List<UserDto> usersDto = users.stream().map(u -> new UserDto(u)).collect(Collectors.toList());
-        List<User> mercenaries = userRepository.findAllByUserIdIn(mercenaryIdList);
-        model.addAttribute("mercenaryMatch", mercenaryMatchDto);
-        model.addAttribute("members", membersDto);
-        model.addAttribute("mercenaries", mercenaries);
-        return "match/editMercenaryMemberForm";
     }
 
     //용병 매치 선발 멤버 수정 반영 (edit이 수정을 의미하기 때문에, put메서드 안 썼습니다)

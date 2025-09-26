@@ -1,4 +1,4 @@
-package goinmul.sportsmanage.controller;
+package goinmul.sportsmanage.domain;
 
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.core.convert.ConversionFailedException;
