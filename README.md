@@ -5,9 +5,22 @@
   <li>html·css → thymeLeaf·반응형 변경 </li>
   <li>백엔드 모든 기능 개발 (마감 후 리팩토링)</li>
 </ul>
- 
-### 프로젝트 스킬
-spring (boot 3, security 6), hibernate 6, thymeleaf 3, vanlia js,  bootStrap 4
+
+### 기술
+* spring (boot 3, security 6), hibernate 6, mysql 8
+* thymeleaf 3, vanlia js, bootStrap 4
+
+### 구조
+* 시큐리티 필터체인 → 컨트롤러 → 뷰 
+* 뷰에서 API 호출 → ajax 방식으로 뷰 반영
+* csrf 방어를 위해 csrf 토큰 사용
+
+### 구장 예약
+
+
+
+
+
 
 ### 프로젝트로 얻은 경험
 
