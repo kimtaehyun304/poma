@@ -14,63 +14,72 @@
 * 시큐리티 필터체인 → 컨트롤러 → 뷰 
 * 뷰에서 API 호출 → ajax 방식으로 뷰 반영
 * csrf 방어를 위해 csrf 토큰 사용
+* j세션 쿠키에 httpOnly, secure 적용
+* 반응형 웹 (pc, 모바일)
 
-### 구장 예약
+### 구장 예약 (경기 모집)
+예약 검증: 이미 예약된 시간인지, 머니가 충분한지  
+* 포트원 결제로 포마 머니 충전
+* 머니로 구장 예약과 동시에 경기 모집
+* 구장 위치는 카카오 지도로 안내
 
+### 경기 참여 방법
+참여 검증: 이미 신청했는지, 마감됐는지, 모집 성별과 맞는지  
+* 3:3, 4:4 방식의 인원 모집
+* 팀을 만들어서 경기 가능 (용병 포함 가능)
+* 매치 공고 게시판에서 참여 신청 가능
+* 날짜, 종목, 성별로 검색 가능 (동적 조건)
+  
+### 고객센터
+* 비밀글로 문의 가능
+* 게시글, 댓글, 대댓글 방식으로 CS 응대
 
+### 트러블 슈팅
+<a href="https://github.com/kimtaehyun304/poma/blob/e3c4a97d4deb1eb61b1e4075d94dff6c39c7e2a5/src/main/java/goinmul/sportsmanage/config/SecurityConfig.java#L47">
+  컨텐츠 보안 정책 적용 → 카카오 지도 css 못 불러옴
+</a>
 
+* 카카오 지도 사용하는 페이지에서만 컨턴츠 보안 정책 해재
+* 위험 요소가 없어서 해재해도 괜찮다고 판단
 
+저장 로직은 중복 검사를 해도 동시 요청엔 문제 발생
+* unique 제약 조건을 추가
 
-
-### 프로젝트로 얻은 경험
-
-보안
+### UI, UX 개선
 <ul>
-  <li>csrf 토큰, csp (Content-Security-Policy) 적용</li>
-  <li>
-    <a href="https://github.com/kimtaehyun304/poma/blob/e3c4a97d4deb1eb61b1e4075d94dff6c39c7e2a5/src/main/java/goinmul/sportsmanage/config/SecurityConfig.java#L47">
-      csp 이슈) 카카오 지도 css 누락 → 예외로 unsafe-inline</li>
-    </a>
-  <li>J세션 쿠키에 httpOnly, secure 적용</li>
-  <li>api 응답 xss(Cross-Site-Scripting) 이스케이프 처리</li>
-</ul>
-
-UI/UX (좋은 사용자 경험 제공)
-<ul>
-    <li>로그인 성공 → reffer url로 redirect</li>
-    <li>비 로그인 상태 응답 받음 → confirm 알림으로 로그인 페이지 이동 제안</li>
-    <li>뒤로가기를 고려하여, 로그인 페이지에서는 브라우저 캐시를 비활성화</li>
-    <li>ex) 로그인 상태임에도 뒤로가기로 로그인 페이지에 접근하면, UI상 비로그인 상태로 보일 수 있음</li>
+    <li>로그인 성공 → 이전 url로 redirect시키기</li>
+    <li>비 로그인이라 요청 실패 → confirm 알림으로 로그인 페이지 이동 제안</li>
+    <li>로그인 페이지로 뒤로가면 로그인 상태여도 비로그인으로 보임 → 브라우저 캐시 비활성화</li>
 </ul>
 
 기타
-<ul>
-    <li>jpa 페치 조인 컬렉션 필드는 where절 자제 (이전 1차 캐시 결과와 다를 수 있기 때문)</li>
-    <li>저장 전에, 중복 검사해도 동시에 요청 오면 저장 될 수 있음 → unique 제약 조건 필요</li>
-    <li>java LocalDate 타입 직렬화 에러 → objectMapper 커스텀</li>
-    <li>대댓글 ajax 구현</li>
-    <li>클린 코드에 대한 지식이 적을 때 진행한 프로젝트라 개선 필요</li>
-    <li>ex) ResponseEntity 제너럴 타입, 오류 메시지를 문자열 → 예외 변경 등</li>
-</ul>
+* 경험이 적을때 개발한 프로젝트라 개선 필요
+* ex) 오류는 예외로 보내고 공통 예외처리 하기
+* jpa 페치 조인 컬렉션 필드는 where절 자제 - 이전 1차 캐시 결과와 다를 수 있기 때문
+* @PathVariable은 model에 자동으로 데이터를 넣는다.
 
 ### 페이지
-
-사용자 페이지
+경기 관련 페이지
 <ul>
   <li>홈 (경기 종목 선택)</li>
   <li>경기 조회·신청·수정·취소</li>
   <li>구장 조회·예약·결제</li>
-  <li>고객 게시판 글 조회·등록 (비밀 글 가능)</li>
-  <li>고객 게시판 댓글 조회·등록</li>
+</ul>
+
+게시판
+<ul>
+  <li>고객 게시판 (글,댓글 조회·등록)</li>
   <li>멘토 리뷰 게시판 (댓글·별점 조회·등록)</li>
   <li>팀 조회·생성</li>
-  <li>로그인·회원가입·계정 찾기</li>
 </ul>
+
+로그인·회원가입
+* 계정 비밀번호 찾기 제공 (이메일로 임시 비밀번호 전송)
 
 마이 페이지
 <ul>
   <li>회원 정보 조회·수정</li>
-  <li>가입한 팀 수정</li>
+  <li>소속 팀 변경</li>
 </ul>
 
 관리자 페이지
