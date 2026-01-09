@@ -9,6 +9,7 @@
 ### 기술
 * spring (boot 3, security 6), hibernate 6, mysql 8
 * thymeleaf 3, vanlia js, bootStrap 4
+* aws (ec2, rds)
 
 ### 구조
 * 시큐리티 필터체인 → 컨트롤러 → 뷰 
