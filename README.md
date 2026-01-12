@@ -43,7 +43,7 @@ innerHTML로 html을 바꾸면, 내용은 바뀌나 script 태그 미동작
 * ㄴhistory.pushState & popstate로 뒤로가기 문제를 해결하려 했지만
 * ㄴhistory state에는 문자열만 저장 가능 (html 저장 불가) → script 태그 미동작 
 * 해결: 리다이렉트로 페이지 이동 (본인 인증 API 호출 1회, 리다이렉트 1회)
-* ㄴ총 2회라 innerHTML 고안한 것
+* ㄴ총 2회라, 네트워크 요청을 줄이기 위해 innerHTML 쓰고 싶었지만 포기 (돼도 복잡)
 
 jwt + ssr 조합은 안 어울린다
 * 상황: 세션은 로컬 메모리를 사용하기에, 스케일 아웃 시 문제가 된다
