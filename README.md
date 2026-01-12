@@ -39,7 +39,7 @@
 innerHTML로 html을 바꾸면, 내용은 바뀌나 script 태그 미동작 
 * 원인: html5에 내재된 xss를 예방하는 규칙
 * 시도: document.write를 쓰면 script 태그 동작하지만, 뒤로가기하면 전전 페이지가 나와서 실패
-* ㄴhistory.pushState & popstate로 뒤로가기 문제를 해결하려했지만
+* ㄴhistory.pushState & popstate로 뒤로가기 문제를 해결하려 했지만
 * ㄴhistory state에는 문자열만 저장 가능 (html 저장 불가) → script 태그 미동작 
 * 해결: 리다이렉트로 페이지 이동 (본인 인증 API 호출 1회, 리다이렉트 1회)
 * ㄴ총 2회라 innerHTML 고안한 것
