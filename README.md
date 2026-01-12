@@ -49,7 +49,7 @@ jwt + ssr 조합은 안 어울린다
 * 상황: 세션은 로컬 메모리를 사용하기에, 스케일 아웃 시 문제가 된다
 * redis를 사용하면 해결되지만, 비싸고 아키텍처가 복잡해져서 싫어서 이 방법을 고안
 * ajax 방식은 로컬스토리지를 사용할 수 있지만, 뷰 렌더링 방식은 못 사용
-* 쿠키는 csrf 위험때문에 채택X
+* 쿠키는 csrf 위험 때문에 채택X (csrf 토큰을 사용하면 되지만 메모리 필요)
 
 <a href="https://github.com/kimtaehyun304/poma/blob/e3c4a97d4deb1eb61b1e4075d94dff6c39c7e2a5/src/main/java/goinmul/sportsmanage/config/SecurityConfig.java#L47">
   컨텐츠 보안 정책 적용 → 카카오 지도 css 못 불러옴
