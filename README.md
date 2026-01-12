@@ -35,15 +35,14 @@
 * 비밀글로 문의 가능
 * 게시글, 댓글, 대댓글 방식으로 CS 응대
 
-
 ### 트러블 슈팅
 innerHTML로 html을 바꾸면, 내용은 바뀌나 script 태그 미동작 
 * 원인: html5에 내재된 xss를 예방하는 규칙
 * 시도: document.write를 쓰면 script 태그 동작하지만, 뒤로가기하면 전전 페이지가 나와서 실패
 * ㄴhistory.pushState & popstate로 뒤로가기를 수정하려함
 * ㄴhistory state에는 문자열만 저장 가능 (html 저장 불가) → script 태그 미동작 
-* 해결: 리다이렉트로 페이지 이동시킴 (본인 인증 API 호출 1회, 리다이렉트 1회)
-* ㄴ총 두 번이라 innerHTML 고안했던 것
+* 해결: 리다이렉트로 페이지 이동 (본인 인증 API 호출 1회, 리다이렉트 1회)
+* ㄴ총 2회라 innerHTML 고안한 것
 
 <a href="https://github.com/kimtaehyun304/poma/blob/e3c4a97d4deb1eb61b1e4075d94dff6c39c7e2a5/src/main/java/goinmul/sportsmanage/config/SecurityConfig.java#L47">
   컨텐츠 보안 정책 적용 → 카카오 지도 css 못 불러옴
