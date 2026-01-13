@@ -50,7 +50,7 @@ jwt + ssr 조합은 안 어울림
 * 시도: redis 사용하면 되지만, 비싸고 아키텍처가 복잡해져서서 jwt + ssr 고안
 * ㄴjwt를 로컬스토리지에 저장하면 ajax에는 사용할수 있지만, ssr에는 안됨
 * ㄴ쿠키는 csrf 위험 → csrf 토큰을 사용하면 되지만 메모리 필요해서 채택 x
-* ssr은 세션 + redis 써야한다고 결론 내림
+* 결론: ssr은 세션 + redis 조합을 쓰자
 
 <a href="https://github.com/kimtaehyun304/poma/blob/e3c4a97d4deb1eb61b1e4075d94dff6c39c7e2a5/src/main/java/goinmul/sportsmanage/config/SecurityConfig.java#L47">
   컨텐츠 보안 정책 적용 → 카카오 지도 css 못 불러옴
