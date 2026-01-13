@@ -45,11 +45,12 @@ innerHTML로 html을 바꾸면, 내용은 바뀌나 script 태그 미동작
 * 해결: 리다이렉트로 페이지 이동 (본인 인증 API 호출 1회, 리다이렉트 1회)
 * ㄴ총 2회라, 네트워크 요청을 줄이기 위해 innerHTML 쓰고 싶었지만 포기 (돼도 복잡)
 
-jwt + ssr 조합은 안 어울린다
-* 상황: 세션은 로컬 메모리를 사용하기에, 스케일 아웃 시 문제가 된다
-* redis를 사용하면 해결되지만, 비싸고 아키텍처가 복잡해져서 싫어서 이 방법을 고안
-* ajax 방식은 로컬스토리지를 사용할 수 있지만, 뷰 렌더링 방식은 못 사용
-* 쿠키는 csrf 위험 때문에 채택X (csrf 토큰을 사용하면 되지만 메모리 필요)
+jwt + ssr 조합은 안 어울림
+* 상황: 세션은 로컬 메모리라 스케일 아웃 시 문제가 됨
+* 시도: redis 사용하면 되지만, 비싸고 아키텍처가 복잡해져서서 jwt + ssr 고안
+* ㄴjwt를 로컬스토리지에 저장하면 ajax에는 사용할수 있지만, ssr에는 안됨
+* ㄴ쿠키는 csrf 위험 → csrf 토큰을 사용하면 되지만 메모리 필요해서 채택 x
+* ssr은 세션 + redis 써야한다고 결론 내림
 
 <a href="https://github.com/kimtaehyun304/poma/blob/e3c4a97d4deb1eb61b1e4075d94dff6c39c7e2a5/src/main/java/goinmul/sportsmanage/config/SecurityConfig.java#L47">
   컨텐츠 보안 정책 적용 → 카카오 지도 css 못 불러옴
